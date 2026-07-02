@@ -1,0 +1,140 @@
+Business Source License 1.1
+
+Licensor:             Zelvem
+Licensed Work:        Zelvem
+                      The Licensed Work is (c) 2025 Zelvem
+Additional Use Grant: You may use the Licensed Work for personal use or for
+                      the internal use of an organization with five (5) or
+                      fewer individuals who access or use the Licensed Work.
+
+                      "Personal use" means use by a single individual for
+                      their own purposes and not on behalf of any
+                      organization or as a commercial service.
+
+                      "Internal use" means use solely within your
+                      organization, not made available to external parties,
+                      and not offered as a service to third parties.
+
+Change Date:          2099-01-01
+Change License:       Apache License, Version 2.0
+
+-------------------------------------------------------------------------------
+
+TERMS AND CONDITIONS
+
+1. GRANT OF RIGHTS
+
+   Subject to the terms and conditions of this License and the Additional
+   Use Grant above, Licensor hereby grants you a non-exclusive,
+   non-transferable, non-sublicensable right to copy, modify, and use the
+   Licensed Work solely as permitted by the Additional Use Grant.
+
+2. PROHIBITED USES
+
+   The following uses are expressly prohibited without obtaining a separate
+   commercial license from Licensor:
+
+   a) Hosting the Licensed Work and offering it as a service to third
+      parties, whether for a fee or free of charge.
+
+   b) Using the Licensed Work within or on behalf of an organization with
+      six (6) or more individuals who access or use the Licensed Work,
+      unless a Zelvem Community Team License has been obtained from
+      Licensor.
+
+   c) Any use of the Licensed Work that competes, directly or indirectly,
+      with services offered by Licensor, including but not limited to
+      Zelvem Hosted.
+
+3. COMMERCIAL LICENSES
+
+   If your use falls outside the scope of the Additional Use Grant above,
+   you must obtain a commercial license from Licensor. Please contact us
+   at info@zelvem.com to discuss licensing options.
+
+   Available commercial licenses:
+
+   - Zelvem Community Team License: for organizations with six (6) or more
+     individuals using the Licensed Work for internal purposes on a
+     self-hosted basis.
+
+   - Zelvem Hosted: a fully managed subscription service operated by
+     Licensor. This is the only way to obtain Zelvem as a managed,
+     hosted service.
+
+4. CONTRIBUTIONS
+
+   Contributions to the Licensed Work are welcome. By submitting a
+   contribution, you agree that your contribution will be licensed under
+   the same terms as this License, and you grant Licensor a perpetual,
+   irrevocable, worldwide, royalty-free license to use, reproduce, modify,
+   and distribute your contribution as part of the Licensed Work.
+
+5. NO WARRANTIES — SELF-HOSTED USE
+
+   THE LICENSED WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+
+   YOU ACKNOWLEDGE AND AGREE THAT:
+
+   a) Licensor does not host, manage, or maintain your self-hosted
+      deployment of the Licensed Work in any way.
+
+   b) You are solely responsible for the setup, configuration, operation,
+      security, and maintenance of your own infrastructure, including but
+      not limited to servers, databases, AI models, and any third-party
+      services you choose to integrate.
+
+   c) You are solely responsible for all costs associated with your
+      self-hosted deployment, including but not limited to server costs,
+      database costs, API costs, and any other infrastructure expenses.
+
+   d) Licensor shall not be liable for any issues, data loss, security
+      breaches, downtime, or any other problems arising from your
+      self-hosted deployment.
+
+   e) No mobile application ("Zelvem for iOS" or "Zelvem for Android")
+      is provided under this License. Native mobile applications are
+      exclusively available through the Zelvem Hosted subscription service.
+
+   f) No technical support, SLA, or uptime guarantee is provided under
+      this License.
+
+6. LIMITATION OF LIABILITY
+
+   IN NO EVENT SHALL LICENSOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+   INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING
+   BUT NOT LIMITED TO PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+   OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+   ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+   TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+   USE OF THE LICENSED WORK, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+   DAMAGE.
+
+7. CHANGE DATE AND FUTURE LICENSE
+
+   On the Change Date specified above (2099-01-01), the Licensed Work will
+   automatically be made available under the terms of the Apache License,
+   Version 2.0, in addition to the terms of this License.
+
+8. TERMINATION
+
+   Any use of the Licensed Work in violation of this License automatically
+   terminates your rights under this License. Upon termination, you must
+   cease all use, reproduction, and distribution of the Licensed Work.
+
+9. GOVERNING LAW
+
+   This License shall be governed by and construed in accordance with
+   applicable law, without regard to its conflict of law provisions.
+
+-------------------------------------------------------------------------------
+
+For commercial licensing inquiries: info@zelvem.com
+Website: https://zelvem.com
+
+For the full text of the Business Source License 1.1, visit:
+https://mariadb.com/bsl11/
+For the full text of the Apache License 2.0, visit:
+https://www.apache.org/licenses/LICENSE-2.0
