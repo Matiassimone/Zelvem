@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F0E9; --surface:#FBFAF6; --border:#DAD7CB; --border-soft:#E4E1D6;
+    --ink:#14171A; --ink2:#5C584E; --muted:#8A8579;
+    --moss:#3F5D42; --moss-hover:#344C37; --on-moss:#F2F0E9;
+    --chip:#EFECE3; --dot:#C9C5B7; --avatar:#E7E3D7; --tint:rgba(63,93,66,.12);
+    --tint2:rgba(63,93,66,.07); --aBord:rgba(63,93,66,.25);
+    --row-hover:#F1EEE6; --cluster-head:#F4F2EB; --filter-on:#EAE7DD;
+  }
+  html,body{margin:0;background:var(--paper);font-family:Geist,system-ui,sans-serif}
+  *{box-sizing:border-box}
+  button{font-family:inherit}
+  @keyframes zpulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
+  @keyframes zbar{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1)}}
+  @keyframes zrotate{0%,16%{transform:rotate(0)}25%,41%{transform:rotate(90deg)}50%,66%{transform:rotate(180deg)}75%,91%{transform:rotate(270deg)}100%{transform:rotate(360deg)}}
+</style>
+</helmet>
+<div style="position:relative;min-height:100vh;background:var(--paper);color:var(--ink);display:flex;overflow:hidden">
+  <aside style="width:66px;flex:none;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:18px 0;gap:3px;position:sticky;top:0;height:100vh">
+    <div style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:12px"><svg width="30" height="30" viewBox="0 0 100 100"><defs><mask id="zrail"><rect x="8" y="8" width="84" height="84" rx="20" fill="#fff"></rect><rect x="35" y="35" width="30" height="30" rx="9" fill="#000"></rect></mask></defs><rect x="8" y="8" width="84" height="84" rx="20" fill="var(--moss)" mask="url(#zrail)"></rect></svg></div>
+    <a href="Zelvem Home.dc.html" title="Inicio" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer;text-decoration:none" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 10 4l7 5.5V16a1 1 0 0 1-1 1h-3v-5H7v5H4a1 1 0 0 1-1-1z"/></svg></a>
+    <div title="Email" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--ink);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="14" height="11" rx="1.6"/><path d="m3.6 6.2 6.4 4.6 6.4-4.6"/></svg></div>
+    <a href="Zelvem Calendar.dc.html" title="Calendario" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer;text-decoration:none" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="12.5" rx="1.6"/><path d="M3 8h14M7 3v3M13 3v3"/></svg></a>
+    <div title="Finanzas" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14l4-4 3 2 6-6"/><path d="M16 6h-3M16 6v3"/></svg></div>
+    <div title="Tareas" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h8M8 10h8M8 14h5"/><path d="m3 6 1.2 1.2L6 5.4"/><path d="m3 13.6 1.2 1.2L6 13"/></svg></div>
+    <div title="Blog" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16.2 4.8 13 13 4.8a1.4 1.4 0 0 1 2 2L6.8 15 4 16.2z"/><path d="M12 6l2 2"/></svg></div>
+    <div title="Redes" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="10" r="2.1"/><circle cx="15" cy="5" r="2.1"/><circle cx="15" cy="15" r="2.1"/><path d="m6.9 9 6.2-2.9M6.9 11l6.2 2.9"/></svg></div>
+    <div onClick="{{ toggle }}" title="Cambiar tema" style="margin-top:auto;margin-bottom:6px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer" style-hover="color:var(--ink2);background:var(--tint)">
+      <sc-if value="{{ isLight }}" hint-placeholder-val="{{ true }}"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11.4A6.4 6.4 0 0 1 8.6 4 6.4 6.4 0 1 0 16 11.4z"/></svg></sc-if>
+      <sc-if value="{{ isDark }}" hint-placeholder-val="{{ false }}"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="3.4"/><path d="M10 2.2v2M10 15.8v2M2.2 10h2M15.8 10h2M4.4 4.4l1.4 1.4M14.2 14.2l1.4 1.4M15.6 4.4l-1.4 1.4M5.8 14.2l-1.4 1.4"/></svg></sc-if>
+    </div>
+    <a href="Zelvem Cuenta.dc.html" title="Tu cuenta" style="width:34px;height:34px;border-radius:50%;background:var(--avatar);border:1px solid var(--border);color:var(--ink2);display:flex;align-items:center;justify-content:center;font:600 11.5px 'Geist Mono',monospace;text-decoration:none;cursor:pointer" style-hover="box-shadow:0 0 0 2px var(--moss)">TR</a>
+  </aside>
+
+  <div style="position:relative;overflow:hidden;flex:1;min-width:0;display:flex;flex-direction:column;height:100vh">
+    <div style="display:flex;align-items:center;gap:12px;padding:13px 24px;border-bottom:1px solid var(--border);background:var(--paper);flex:none">
+      <div style="display:flex;border:1px solid var(--border);border-radius:9px;overflow:hidden;background:var(--surface)">
+        <div onClick="{{ showDigest }}" style="{{ segDigestStyle }}">Digest</div>
+        <div onClick="{{ showInbox }}" style="{{ segInboxStyle }}">Bandeja</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:9px">
+        <span style="font:400 12.5px Geist;color:var(--muted)">Actualizado hace 8 min</span>
+        <button title="Actualizar" style="display:inline-flex;align-items:center;gap:6px;padding:6px 11px;background:transparent;border:1px solid var(--border);border-radius:8px;font:600 12px Geist;color:var(--ink2);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 5.5A6.5 6.5 0 1 0 17 10"/><path d="M17 4v3h-3"/></svg>Actualizar</button>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+        <div onClick="{{ openCmd }}" style="display:flex;align-items:center;gap:8px;padding:8px 13px;border:1px solid var(--border);border-radius:9px;background:var(--surface);color:var(--muted);font:500 12.5px Geist;white-space:nowrap;cursor:pointer" style-hover="color:var(--ink2)">Buscar<kbd style="font:600 11px 'Geist Mono',monospace;color:var(--ink2);background:var(--chip);border:1px solid var(--border);border-radius:5px;padding:2px 6px">⌘K</kbd></div>
+        <button onClick="{{ openCompose }}" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;background:var(--moss);color:var(--on-moss);border:none;border-radius:9px;font:600 13px Geist;cursor:pointer" style-hover="background:var(--moss-hover)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16.2 4.8 13 13 4.8a1.4 1.4 0 0 1 2 2L6.8 15 4 16.2z"/></svg>Redactar</button>
+      </div>
+    </div>
+
+  <sc-if value="{{ isDigest }}" hint-placeholder-val="{{ true }}">
+  <main style="flex:1;overflow-y:auto;padding:32px 40px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:22px">
+      <div>
+        <h1 style="font:600 28px/1.1 Geist;margin:0 0 10px;letter-spacing:-0.02em">47 nuevos, ya ordenados.</h1>
+      </div>
+      <button onClick="{{ openBatch }}" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;background:var(--moss);color:var(--on-moss);border:none;border-radius:9px;font:600 13px Geist;cursor:pointer;flex:none" style-hover="background:var(--moss-hover)">Responder los 4</button>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-bottom:26px">
+      <div style="padding:6px 13px;background:var(--filter-on);border:1px solid var(--border);border-radius:8px;font:600 12.5px Geist;color:var(--ink)">Todas <span style="color:var(--muted);font-weight:500">47</span></div>
+      <div style="padding:6px 13px;background:transparent;border:1px solid var(--border);border-radius:8px;font:500 12.5px Geist;color:var(--muted);cursor:pointer" style-hover="color:var(--ink);background:var(--row-hover)">Trabajo <span>31</span></div>
+      <div style="padding:6px 13px;background:transparent;border:1px solid var(--border);border-radius:8px;font:500 12.5px Geist;color:var(--muted);cursor:pointer" style-hover="color:var(--ink);background:var(--row-hover)">Personal <span>9</span></div>
+      <div style="padding:6px 13px;background:transparent;border:1px solid var(--border);border-radius:8px;font:500 12.5px Geist;color:var(--muted);cursor:pointer" style-hover="color:var(--ink);background:var(--row-hover)">Open source <span>7</span></div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div style="font:600 11px 'Geist Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)">Necesita tu respuesta</div><div style="font:600 11px 'Geist Mono',monospace;color:var(--muted)">4</div></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:13px;overflow:hidden;margin-bottom:30px">
+      <sc-for list="{{ needsReply }}" as="row" hint-placeholder-count="4">
+        <div onClick="{{ row.open }}" onMouseEnter="{{ row.onEnter }}" onMouseLeave="{{ row.onLeave }}" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-bottom:1px solid var(--border-soft);cursor:pointer" style-hover="background:var(--row-hover)">
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--ink);flex:none"></div>
+          <div style="width:62px;flex:none;font:500 10px 'Geist Mono',monospace;letter-spacing:.08em;color:var(--muted)">{{ row.account }}</div>
+          <div style="flex:1;min-width:0"><div style="display:flex;align-items:baseline;gap:8px"><span style="font:600 14px Geist">{{ row.sender }}</span><span style="font:400 13px Geist;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ row.subject }}</span></div><div style="font:400 12.5px Geist;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ row.summary }}</div></div>
+          <div style="display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border:1px solid var(--border);border-radius:7px;font:500 11px 'Geist Mono',monospace;color:var(--ink2);flex:none;cursor:pointer" style-hover="background:var(--row-hover)">{{ row.theme }}<svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8l4 4 4-4"/></svg></div>
+          <div style="width:124px;flex:none;display:flex;justify-content:flex-end;align-items:center">
+            <sc-if value="{{ row.notHovered }}" hint-placeholder-val="{{ true }}"><span style="font:500 11.5px 'Geist Mono',monospace;color:var(--muted)">{{ row.time }}</span></sc-if>
+            <sc-if value="{{ row.isHovered }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:2px">
+              <button title="Responder" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:none;background:transparent;color:var(--muted);cursor:pointer" style-hover="background:var(--tint);color:var(--moss)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5 4 9l5 4"/><path d="M4 9h7a4 4 0 0 1 4 4v2"/></svg></button>
+              <button title="Archivar" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:none;background:transparent;color:var(--muted);cursor:pointer" style-hover="background:var(--tint);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="4" rx="1"/><path d="M5 8.5V15a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8.5"/><path d="M8.5 11h3"/></svg></button>
+              <button title="Posponer" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:none;background:transparent;color:var(--muted);cursor:pointer" style-hover="background:var(--tint);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="11" r="5.2"/><path d="M10 8.4V11l1.8 1.2"/><path d="M3.5 5 6 3M16.5 5 14 3"/></svg></button>
+              <button title="Eliminar" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:none;background:transparent;color:var(--muted);cursor:pointer" style-hover="background:var(--tint);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h12"/><path d="M7.5 6V4.5h5V6"/><path d="M5.5 6 6.4 16h7.2L14.5 6"/></svg></button>
+            </div></sc-if>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div style="font:600 11px 'Geist Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">Por tema</div></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:13px;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px;padding:13px 16px;background:var(--cluster-head);border-bottom:1px solid var(--border-soft)"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l5 5 5-5"/></svg><div style="font:600 12.5px 'Geist Mono',monospace;color:var(--ink)">Pull requests</div><div style="font:500 11px 'Geist Mono',monospace;color:var(--muted)">7</div></div>
+      <sc-for list="{{ prRows }}" as="row" hint-placeholder-count="2">
+        <div onMouseEnter="{{ row.onEnter }}" onMouseLeave="{{ row.onLeave }}" style="display:flex;align-items:center;gap:14px;padding:12px 16px 12px 38px;border-bottom:1px solid var(--border-soft)" style-hover="background:var(--row-hover)">
+          <div style="width:62px;flex:none;font:500 10px 'Geist Mono',monospace;letter-spacing:.08em;color:var(--muted)">{{ row.account }}</div>
+          <div style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><span style="font:600 13.5px Geist">{{ row.sender }}</span> <span style="font:400 13px Geist;color:var(--ink2)">{{ row.subject }}</span></div>
+          <div style="width:124px;flex:none;display:flex;justify-content:flex-end;align-items:center">
+            <sc-if value="{{ row.notHovered }}" hint-placeholder-val="{{ true }}"><span style="font:400 11.5px Geist;color:var(--muted);margin-right:10px">{{ row.meta }}</span><span style="font:500 11.5px 'Geist Mono',monospace;color:var(--muted)">{{ row.time }}</span></sc-if>
+            <sc-if value="{{ row.isHovered }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:2px">
+              <button title="Archivar" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:none;background:transparent;color:var(--muted);cursor:pointer" style-hover="background:var(--tint);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="4" rx="1"/><path d="M5 8.5V15a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8.5"/><path d="M8.5 11h3"/></svg></button>
+              <button title="Eliminar" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:none;background:transparent;color:var(--muted);cursor:pointer" style-hover="background:var(--tint);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h12"/><path d="M7.5 6V4.5h5V6"/><path d="M5.5 6 6.4 16h7.2L14.5 6"/></svg></button>
+            </div></sc-if>
+          </div>
+        </div>
+      </sc-for>
+      <div style="display:flex;align-items:center;gap:10px;padding:13px 16px;background:var(--cluster-head);border-bottom:1px solid var(--border-soft)"><svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l5 5 5-5"/></svg><div style="font:600 12.5px 'Geist Mono',monospace;color:var(--ink)">Reclutamiento</div><div style="font:500 11px 'Geist Mono',monospace;color:var(--muted)">4</div></div>
+      <sc-for list="{{ recRows }}" as="row" hint-placeholder-count="2">
+        <div onMouseEnter="{{ row.onEnter }}" onMouseLeave="{{ row.onLeave }}" style="display:flex;align-items:center;gap:14px;padding:12px 16px 12px 38px;border-bottom:1px solid var(--border-soft)" style-hover="background:var(--row-hover)">
+          <div style="width:62px;flex:none;font:500 10px 'Geist Mono',monospace;letter-spacing:.08em;color:var(--muted)">{{ row.account }}</div>
+          <div style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><span style="font:600 13.5px Geist">{{ row.sender }}</span> <span style="font:400 13px Geist;color:var(--ink2)">{{ row.subject }}</span></div>
+          <div style="width:124px;flex:none;display:flex;justify-content:flex-end;align-items:center">
+            <sc-if value="{{ row.notHovered }}" hint-placeholder-val="{{ true }}"><span style="font:400 11.5px Geist;color:var(--muted);margin-right:10px">{{ row.meta }}</span><span style="font:500 11.5px 'Geist Mono',monospace;color:var(--muted)">{{ row.time }}</span></sc-if>
+            <sc-if value="{{ row.isHovered }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:2px">
+              <button title="Responder" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:none;background:transparent;color:var(--muted);cursor:pointer" style-hover="background:var(--tint);color:var(--moss)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5 4 9l5 4"/><path d="M4 9h7a4 4 0 0 1 4 4v2"/></svg></button>
+              <button title="Archivar" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:none;background:transparent;color:var(--muted);cursor:pointer" style-hover="background:var(--tint);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="4" rx="1"/><path d="M5 8.5V15a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8.5"/><path d="M8.5 11h3"/></svg></button>
+              <button title="Eliminar" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:none;background:transparent;color:var(--muted);cursor:pointer" style-hover="background:var(--tint);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h12"/><path d="M7.5 6V4.5h5V6"/><path d="M5.5 6 6.4 16h7.2L14.5 6"/></svg></button>
+            </div></sc-if>
+          </div>
+        </div>
+      </sc-for>
+      <sc-for list="{{ collapsed }}" as="cl" hint-placeholder-count="4">
+        <div onMouseEnter="{{ cl.onEnter }}" onMouseLeave="{{ cl.onLeave }}" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border-soft)" style-hover="background:var(--row-hover)">
+          <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5l5 5-5 5"/></svg>
+          <div style="font:600 12.5px 'Geist Mono',monospace;color:var(--ink);width:158px">{{ cl.name }}</div>
+          <div style="font:500 11px 'Geist Mono',monospace;color:var(--muted);width:22px">{{ cl.count }}</div>
+          <div style="flex:1;min-width:0;font:400 12.5px Geist;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ cl.gist }}</div>
+          <div style="width:90px;flex:none;display:flex;justify-content:flex-end;align-items:center">
+            <sc-if value="{{ cl.isHovered }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:2px">
+              <button title="Archivar todo" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:none;background:transparent;color:var(--muted);cursor:pointer" style-hover="background:var(--tint);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="4" rx="1"/><path d="M5 8.5V15a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8.5"/><path d="M8.5 11h3"/></svg></button>
+              <button onClick="{{ showInbox }}" title="Ver todos" style="height:28px;padding:0 11px;display:flex;align-items:center;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--ink2);cursor:pointer;font:600 11.5px Geist" style-hover="background:var(--row-hover);color:var(--ink)">Ver</button>
+            </div></sc-if>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+  </main>
+  </sc-if>
+
+  <sc-if value="{{ isInbox }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1;min-width:0;display:flex;min-height:0">
+    <aside style="width:214px;flex:none;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:18px 12px;overflow-y:auto">
+      <div style="font:600 10px 'Geist Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:0 4px;margin-bottom:6px">Bandejas</div>
+      <div style="display:flex;align-items:center;gap:10px;padding:7px 11px;border-radius:8px;background:var(--tint);font:600 12.5px Geist;color:var(--ink);cursor:pointer"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h14v10H3zM3 9h4l1.5 2h3L13 9h4"/></svg><span style="flex:1">Recibidos</span><span style="font:600 10.5px 'Geist Mono',monospace;color:var(--ink2)">47</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:7px 11px;border-radius:8px;font:500 12.5px Geist;color:var(--ink2);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3l2.1 4.7 5.1.5-3.9 3.4 1.2 5L10 14.6 5.5 16.9l1.2-5L2.8 8.2l5.1-.5z"/></svg><span style="flex:1">Destacados</span><span style="font:600 10.5px 'Geist Mono',monospace;color:var(--muted)">3</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:7px 11px;border-radius:8px;font:500 12.5px Geist;color:var(--ink2);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3 9 11M17 3l-5 14-3-6-6-3z"/></svg><span style="flex:1">Enviados</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:7px 11px;border-radius:8px;font:500 12.5px Geist;color:var(--ink2);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16.2 4.8 13 13 4.8a1.4 1.4 0 0 1 2 2L6.8 15 4 16.2z"/></svg><span style="flex:1">Borradores</span><span style="font:600 10.5px 'Geist Mono',monospace;color:var(--muted)">2</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:7px 11px;border-radius:8px;font:500 12.5px Geist;color:var(--ink2);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="4" rx="1"/><path d="M5 8.5V15a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8.5M8.5 11h3"/></svg><span style="flex:1">Archivados</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:7px 11px;border-radius:8px;font:500 12.5px Geist;color:var(--ink2);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M5 5l10 10"/></svg><span style="flex:1">Spam</span><span style="font:600 10.5px 'Geist Mono',monospace;color:var(--muted)">5</span></div>
+      <div style="height:1px;background:var(--border-soft);margin:14px 4px"></div>
+      <div style="font:600 10px 'Geist Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:0 4px;margin-bottom:6px">Cuentas</div>
+      <sc-for list="{{ accounts }}" as="a" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:10px;padding:6px 11px;border-radius:8px;font:500 12px Geist;color:var(--ink2);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><span style="width:9px;height:9px;border-radius:3px;background:{{ a.color }}"></span><span style="flex:1">{{ a.label }}</span><span style="font:600 10.5px 'Geist Mono',monospace;color:var(--muted)">{{ a.count }}</span></div></sc-for>
+      <div style="height:1px;background:var(--border-soft);margin:14px 4px"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px;margin-bottom:6px"><span style="font:600 10px 'Geist Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">Tags</span><div onClick="{{ openTags }}" title="Gestionar tags" style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:6px;font:500 17px Geist;color:var(--muted);cursor:pointer;line-height:1" style-hover="background:var(--row-hover);color:var(--ink)">+</div></div>
+      <sc-for list="{{ userTags }}" as="tg" hint-placeholder-count="3"><div onClick="{{ tg.startEdit }}" style="display:flex;align-items:center;gap:10px;padding:6px 11px;border-radius:8px;font:500 12px Geist;color:var(--ink2);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><span style="width:9px;height:9px;border-radius:50%;background:{{ tg.color }}"></span><span style="flex:1">{{ tg.label }}</span><span style="font:600 10px 'Geist Mono',monospace;color:var(--muted)">{{ tg.count }}</span></div></sc-for>
+      <div onClick="{{ openTags }}" style="display:flex;align-items:center;gap:8px;padding:6px 11px;margin-top:2px;border-radius:8px;font:500 12px Geist;color:var(--muted);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4v12M4 10h12"/></svg>Nuevo tag</div>
+    </aside>
+
+    <div style="width:396px;flex:none;border-right:1px solid var(--border);display:flex;flex-direction:column;background:var(--paper)">
+      <div style="display:flex;align-items:center;gap:10px;padding:16px 16px 12px">
+        <div style="font:600 16px Geist;color:var(--ink)">Recibidos</div>
+        <div style="font:500 12px 'Geist Mono',monospace;color:var(--muted)">8 de 47</div>
+        <div style="margin-left:auto;display:flex;gap:2px">
+          <div style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--row-hover)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h12M6 10h8M8 14h4"/></svg></div>
+          <div style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--row-hover)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="5" height="5" rx="1"/><rect x="3" y="12" width="5" height="5" rx="1"/><path d="M11 5h6M11 14h6"/></svg></div>
+        </div>
+      </div>
+      <div style="flex:1;overflow-y:auto">
+        <sc-for list="{{ messages }}" as="m" hint-placeholder-count="8">
+          <div onClick="{{ m.select }}" style="{{ m.rowStyle }}" style-hover="background:var(--row-hover)">
+            <div onClick="{{ m.toggle }}" style="{{ m.boxStyle }}"><sc-if value="{{ m.selected }}" hint-placeholder-val="{{ false }}"><svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="var(--on-moss)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg></sc-if></div>
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;align-items:baseline;gap:7px;margin-bottom:2px">
+                <span style="{{ m.senderStyle }}">{{ m.sender }}</span>
+                <sc-if value="{{ m.starred }}" hint-placeholder-val="{{ false }}"><svg width="12" height="12" viewBox="0 0 20 20" fill="#C79A3A" style="flex:none"><path d="M10 2.5l2.06 4.55 4.94.5-3.7 3.3 1.07 4.85L10 13.7 5.63 16.7l1.07-4.85-3.7-3.3 4.94-.5z"/></svg></sc-if>
+                <span style="margin-left:auto;display:flex;align-items:center;gap:6px;flex:none"><sc-if value="{{ m.unread }}" hint-placeholder-val="{{ false }}"><span style="width:7px;height:7px;border-radius:50%;background:var(--moss)"></span></sc-if><span style="font:500 11px 'Geist Mono',monospace;color:var(--muted)">{{ m.time }}</span></span>
+              </div>
+              <div style="{{ m.subjStyle }}">{{ m.subject }}</div>
+              <div style="font:400 12px Geist;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px">{{ m.preview }}</div>
+              <sc-if value="{{ m.hasTag }}" hint-placeholder-val="{{ false }}"><div style="display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:2px 8px;border:1px solid var(--border);border-radius:20px;font:500 10.5px Geist;color:var(--ink2)"><span style="width:7px;height:7px;border-radius:50%;background:{{ m.tagColor }}"></span>{{ m.tagLabel }}</div></sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <section style="flex:1;min-width:0;display:flex;flex-direction:column;background:var(--paper)">
+      <div style="padding:20px 24px 14px;border-bottom:1px solid var(--border-soft)">
+        <div style="display:flex;align-items:flex-start;gap:16px">
+          <h2 style="flex:1;font:600 19px/1.3 Geist;margin:0;letter-spacing:-0.01em">{{ thread.subject }}</h2>
+          <div style="display:flex;gap:3px;flex:none">
+            <div title="Archivar" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid var(--border);color:var(--ink2);cursor:pointer" style-hover="background:var(--tint)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="4" rx="1"/><path d="M5 8.5V15a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8.5M8.5 11h3"/></svg></div>
+            <div title="Posponer" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid var(--border);color:var(--ink2);cursor:pointer" style-hover="background:var(--tint)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="11" r="5.2"/><path d="M10 8.4V11l1.8 1.2M3.5 5 6 3M16.5 5 14 3"/></svg></div>
+            <div title="Eliminar" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid var(--border);color:var(--ink2);cursor:pointer" style-hover="background:var(--tint)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h12M7.5 6V4.5h5V6M5.5 6 6.4 16h7.2L14.5 6"/></svg></div>
+            <div title="Más" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid var(--border);color:var(--ink2);cursor:pointer" style-hover="background:var(--tint)"><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><circle cx="5" cy="10" r="1.4"/><circle cx="10" cy="10" r="1.4"/><circle cx="15" cy="10" r="1.4"/></svg></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:11px">
+          <sc-if value="{{ thread.hasTag }}" hint-placeholder-val="{{ true }}"><div style="display:inline-flex;align-items:center;gap:5px;padding:2px 9px;border:1px solid var(--border);border-radius:20px;font:500 10.5px Geist;color:var(--ink2)"><span style="width:7px;height:7px;border-radius:50%;background:{{ thread.tagColor }}"></span>{{ thread.tagLabel }}</div></sc-if>
+          <span style="font:400 12px Geist;color:var(--muted)">{{ thread.to }}</span>
+          <div title="Ver todos los correos de este remitente" style="margin-left:auto;display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border:1px solid var(--border);border-radius:20px;font:500 11.5px Geist;color:var(--moss);cursor:pointer" style-hover="background:var(--tint)">{{ thread.moreLabel }}<svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5l5 5-5 5"/></svg></div>
+        </div>
+      </div>
+      <div style="padding:14px 24px 4px">
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:13px 15px;background:var(--tint2);border:1px solid var(--aBord);border-radius:12px">
+          <svg width="16" height="16" viewBox="0 0 100 100" style="flex:none;margin-top:1px"><defs><mask id="zi-assist"><rect x="8" y="8" width="84" height="84" rx="20" fill="#fff"></rect><rect x="35" y="35" width="30" height="30" rx="9" fill="#000"></rect></mask></defs><rect x="8" y="8" width="84" height="84" rx="20" fill="var(--moss)" mask="url(#zi-assist)"></rect></svg>
+          <div style="flex:1;min-width:0">
+            <div style="font:400 13px/1.55 Geist;color:var(--ink);margin-bottom:10px">{{ thread.summary }}</div>
+            <div style="display:flex;gap:7px;flex-wrap:wrap">
+              <sc-for list="{{ thread.actionChips }}" as="a" hint-placeholder-count="3"><div style="{{ a.chipStyle }}">{{ a.label }}</div></sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:4px 24px">
+        <sc-for list="{{ thread.msgs }}" as="mm" hint-placeholder-count="3">
+          <div style="display:flex;gap:13px;padding:18px 0;border-bottom:1px solid var(--border-soft)">
+            <div style="width:34px;height:34px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font:600 12px 'Geist Mono',monospace;{{ mm.avatarStyle }}">{{ mm.initials }}</div>
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:7px"><span style="font:600 13.5px Geist;color:var(--ink)">{{ mm.from }}</span><span style="margin-left:auto;font:500 11px 'Geist Mono',monospace;color:var(--muted)">{{ mm.time }}</span></div>
+              <sc-for list="{{ mm.bodyLines }}" as="ln" hint-placeholder-count="2"><p style="margin:0 0 8px;font:400 13.5px/1.65 Geist;color:var(--ink2)">{{ ln }}</p></sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="padding:14px 24px;border-top:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:12px">
+        <div onClick="{{ openReply }}" style="flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:var(--paper);font:400 13px Geist;color:var(--muted);cursor:text">{{ thread.replyPlaceholder }}</div>
+        <button onClick="{{ openReply }}" style="display:inline-flex;align-items:center;gap:7px;padding:10px 17px;background:var(--moss);color:var(--on-moss);border:none;border-radius:9px;font:600 13px Geist;cursor:pointer;flex:none" style-hover="background:var(--moss-hover)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5 4 9l5 4M4 9h7a4 4 0 0 1 4 4v2"/></svg>Responder</button>
+      </div>
+    </section>
+
+    <div style="{{ bulkBarStyle }}">
+      <div style="display:flex;align-items:center;gap:3px;padding:7px 8px 7px 15px;background:var(--ink);border-radius:13px;box-shadow:0 18px 44px -14px rgba(0,0,0,.55)">
+        <span style="font:600 12.5px Geist;color:var(--paper);white-space:nowrap;margin-right:6px">{{ selectedLabel }}</span>
+        <span style="width:1px;height:22px;background:rgba(150,150,150,.35);margin:0 3px"></span>
+        <button onClick="{{ applyBulk }}" style="display:inline-flex;align-items:center;gap:6px;padding:8px 11px;background:transparent;border:none;border-radius:8px;color:var(--paper);font:600 12.5px Geist;cursor:pointer" style-hover="background:rgba(150,150,150,.22)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="4" rx="1"/><path d="M5 8.5V15a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8.5M8.5 11h3"/></svg>Archivar</button>
+        <button onClick="{{ applyBulk }}" style="display:inline-flex;align-items:center;gap:6px;padding:8px 11px;background:transparent;border:none;border-radius:8px;color:var(--paper);font:600 12.5px Geist;cursor:pointer" style-hover="background:rgba(150,150,150,.22)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="11" r="5.2"/><path d="M10 8.4V11l1.8 1.2M3.5 5 6 3M16.5 5 14 3"/></svg>Posponer</button>
+        <button onClick="{{ applyBulk }}" style="display:inline-flex;align-items:center;gap:6px;padding:8px 11px;background:transparent;border:none;border-radius:8px;color:var(--paper);font:600 12.5px Geist;cursor:pointer" style-hover="background:rgba(150,150,150,.22)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3l2.1 4.7 5.1.5-3.9 3.4 1.2 5L10 14.6 5.5 16.9l1.2-5L2.8 8.2l5.1-.5z"/></svg>Destacar</button>
+        <button onClick="{{ openTags }}" style="display:inline-flex;align-items:center;gap:6px;padding:8px 11px;background:transparent;border:none;border-radius:8px;color:var(--paper);font:600 12.5px Geist;cursor:pointer" style-hover="background:rgba(150,150,150,.22)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V5a1 1 0 0 1 1-1h4l7 7-5 5-7-7z"/><circle cx="7" cy="7" r="1"/></svg>Etiquetar</button>
+        <button onClick="{{ applyBulk }}" style="display:inline-flex;align-items:center;gap:6px;padding:8px 11px;background:transparent;border:none;border-radius:8px;color:var(--paper);font:600 12.5px Geist;cursor:pointer" style-hover="background:rgba(150,150,150,.22)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h12M7.5 6V4.5h5V6M5.5 6 6.4 16h7.2L14.5 6"/></svg>Eliminar</button>
+        <span style="width:1px;height:22px;background:rgba(150,150,150,.35);margin:0 3px"></span>
+        <button onClick="{{ clearSel }}" title="Deseleccionar" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;border-radius:8px;color:var(--paper);cursor:pointer" style-hover="background:rgba(150,150,150,.22)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg></button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <div style="{{ batchWrapStyle }}">
+    <sc-if value="{{ batchInProgress }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;align-items:center;gap:18px;padding:15px 24px;border-bottom:1px solid var(--border);flex:none">
+        <button onClick="{{ closeBatch }}" title="Salir" style="width:32px;height:32px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg></button>
+        <div style="flex:1;max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font:600 11px 'Geist Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)">Responder los 4</span>
+            <span style="font:600 11px 'Geist Mono',monospace;color:var(--ink2)">{{ batchStepLabel }}</span>
+          </div>
+          <div style="display:flex;gap:5px">
+            <sc-for list="{{ progSegs }}" as="seg" hint-placeholder-count="4"><div style="{{ seg.style }}"></div></sc-for>
+          </div>
+        </div>
+        <div style="width:32px;flex:none"></div>
+      </div>
+
+      <div style="flex:1;overflow-y:auto;display:flex;justify-content:center;padding:32px 24px">
+        <div style="width:100%;max-width:640px">
+          <div style="display:flex;align-items:flex-start;gap:13px;padding:16px 18px;background:var(--surface);border:1px solid var(--border);border-radius:13px;margin-bottom:22px">
+            <div style="width:38px;height:38px;flex:none;border-radius:10px;background:var(--avatar);color:var(--ink2);display:flex;align-items:center;justify-content:center;font:600 12px 'Geist Mono',monospace">{{ curAvatar }}</div>
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:4px"><span style="font:600 14px Geist;color:var(--ink)">{{ curSender }}</span><span style="font:500 10px 'Geist Mono',monospace;letter-spacing:.06em;color:var(--muted)">{{ curAccount }}</span></div>
+              <div style="font:600 13.5px Geist;color:var(--ink);margin-bottom:6px">{{ curSubject }}</div>
+              <div style="font:400 13px/1.55 Geist;color:var(--ink2)">{{ curContext }}</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:11px">
+            <svg width="14" height="14" viewBox="0 0 100 100"><defs><mask id="zi-redac"><rect x="8" y="8" width="84" height="84" rx="20" fill="#fff"></rect><rect x="35" y="35" width="30" height="30" rx="9" fill="#000"></rect></mask></defs><rect x="8" y="8" width="84" height="84" rx="20" fill="var(--moss)" mask="url(#zi-redac)"></rect></svg>
+            <span style="font:600 11px 'Geist Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--moss)">Zelvem redactó por vos</span>
+          </div>
+          <div style="border:1px solid var(--border);border-radius:13px;overflow:hidden;background:var(--surface)">
+            <div style="display:flex;align-items:center;gap:9px;padding:11px 16px;border-bottom:1px solid var(--border-soft)">
+              <span style="font:500 12px Geist;color:var(--muted)">Para</span>
+              <span style="font:500 12.5px Geist;color:var(--ink2)">{{ curTo }}</span>
+            </div>
+            <textarea value="{{ curText }}" onChange="{{ curEdit }}" style="width:100%;box-sizing:border-box;min-height:128px;resize:vertical;border:none;outline:none;background:transparent;padding:16px;font:400 14px/1.65 Geist;color:var(--ink)"></textarea>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:9px;margin-top:15px;flex-wrap:wrap">
+            <span style="font:500 12px Geist;color:var(--muted);margin-right:2px">Ajustar tono</span>
+            <sc-for list="{{ toneChips }}" as="chip" hint-placeholder-count="4"><div onClick="{{ chip.set }}" style="{{ chip.style }}">{{ chip.label }}</div></sc-for>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex:none;border-top:1px solid var(--border);padding:15px 24px;display:flex;justify-content:center">
+        <div style="width:100%;max-width:640px;display:flex;align-items:center;gap:12px">
+          <button onClick="{{ skipOne }}" style="padding:11px 18px;border:1px solid var(--border);border-radius:9px;background:transparent;color:var(--ink2);font:600 13px Geist;cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)">Saltar</button>
+          <div style="flex:1"></div>
+          <button onClick="{{ sendNext }}" style="display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:var(--moss);color:var(--on-moss);border:none;border-radius:9px;font:600 13.5px Geist;cursor:pointer" style-hover="background:var(--moss-hover)">Enviar y siguiente<svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h11M11 6l4 4-4 4"/></svg></button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ batchDone }}" hint-placeholder-val="{{ false }}">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center">
+        <div style="width:64px;height:64px;border-radius:50%;background:var(--tint);display:flex;align-items:center;justify-content:center;margin-bottom:24px">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--moss)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>
+        </div>
+        <h2 style="font:600 24px Geist;color:var(--ink);margin:0 0 10px;letter-spacing:-0.02em">{{ doneTitle }}</h2>
+        <p style="font:400 15px/1.6 Geist;color:var(--ink2);margin:0 0 26px;max-width:390px">{{ doneSub }}</p>
+        <button onClick="{{ closeBatch }}" style="padding:11px 22px;background:var(--moss);color:var(--on-moss);border:none;border-radius:9px;font:600 13.5px Geist;cursor:pointer" style-hover="background:var(--moss-hover)">Volver al digest</button>
+      </div>
+    </sc-if>
+  </div>
+
+  <div onClick="{{ closeCompose }}" style="{{ backdropStyle }}"></div>
+  <div style="{{ panelStyle }}">
+    <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--border)">
+      <div style="font:600 15px Geist;color:var(--ink)">{{ composeTitle }}</div>
+      <div style="margin-left:auto;display:flex;gap:2px">
+        <div title="Minimizar" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 14h10"/></svg></div>
+        <div onClick="{{ closeCompose }}" title="Cerrar" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg></div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:10px;padding:11px 20px;border-bottom:1px solid var(--border-soft)">
+      <span style="font:500 12px Geist;color:var(--muted);width:44px">De</span>
+      <div style="flex:1;display:inline-flex;align-items:center;gap:8px;font:500 13px Geist;color:var(--ink);cursor:pointer"><span style="width:9px;height:9px;border-radius:3px;background:#3F5D42"></span>Trabajo · tomas@empresa.com<svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="var(--muted)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8l4 4 4-4"/></svg></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;padding:11px 20px;border-bottom:1px solid var(--border-soft)">
+      <span style="font:500 12px Geist;color:var(--muted);width:44px">Para</span>
+      <sc-if value="{{ isReply }}" hint-placeholder-val="{{ false }}"><div style="flex:1;display:flex;align-items:center;gap:7px"><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 5px 3px 9px;background:var(--chip);border:1px solid var(--border);border-radius:16px;font:500 12.5px Geist;color:var(--ink)">Marco Díaz<svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg></span></div></sc-if>
+      <sc-if value="{{ notReply }}" hint-placeholder-val="{{ true }}"><span style="flex:1;font:400 13px Geist;color:var(--muted)">Agregá destinatarios…</span></sc-if>
+      <span style="font:500 12px Geist;color:var(--muted);cursor:pointer">Cc</span>
+      <span style="font:500 12px Geist;color:var(--muted);cursor:pointer">Cco</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;padding:11px 20px;border-bottom:1px solid var(--border)">
+      <span style="font:500 12px Geist;color:var(--muted);width:44px">Asunto</span>
+      <span style="flex:1;font:500 13px Geist;color:{{ subjectColor }}">{{ composeSubjectDisplay }}</span>
+    </div>
+
+    <div style="flex:1;overflow-y:auto;padding:18px 20px">
+      <sc-if value="{{ isReply }}" hint-placeholder-val="{{ false }}"><p style="margin:0 0 14px;font:400 13.5px/1.6 Geist;color:var(--ink)">Hola Marco,</p></sc-if>
+      <p style="margin:0;font:400 13.5px/1.6 Geist;color:var(--muted)">Escribí tu mensaje…</p>
+    </div>
+
+    <div style="padding:12px 20px;border-top:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:10px">
+      <button onClick="{{ closeCompose }}" style="display:inline-flex;align-items:center;gap:7px;padding:10px 20px;background:var(--moss);color:var(--on-moss);border:none;border-radius:9px;font:600 13px Geist;cursor:pointer" style-hover="background:var(--moss-hover)">Enviar<svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3 9 11M17 3l-5 14-3-6-6-3z"/></svg></button>
+      <div style="display:flex;gap:1px;margin-left:6px">
+        <div title="Adjuntar" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 7.5 8.6 13a2.3 2.3 0 0 1-3.2-3.2l5.8-5.8a1.4 1.4 0 0 1 2 2l-5.8 5.8"/></svg></div>
+        <div title="Negrita" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--muted);cursor:pointer;font:700 13px Geist" style-hover="background:var(--row-hover);color:var(--ink)">B</div>
+        <div title="Enlace" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12a3 3 0 0 0 4 0l2-2a3 3 0 0 0-4-4l-1 1M12 8a3 3 0 0 0-4 0l-2 2a3 3 0 0 0 4 4l1-1"/></svg></div>
+      </div>
+      <div title="Descartar" style="margin-left:auto;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h12M7.5 6V4.5h5V6M5.5 6 6.4 16h7.2L14.5 6"/></svg></div>
+    </div>
+  </div>
+
+  <div onClick="{{ closeTags }}" style="{{ tagsWrapStyle }}">
+    <div onClick="{{ stopEvt }}" style="width:min(780px,100%);height:min(624px,86%);display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--border);border-radius:15px;box-shadow:0 30px 70px -28px rgba(0,0,0,.55);overflow:hidden">
+      <div style="display:flex;align-items:center;padding:17px 22px;border-bottom:1px solid var(--border)">
+        <div style="font:600 15px Geist;color:var(--ink)">Gestionar tags</div>
+        <div onClick="{{ closeTags }}" style="margin-left:auto;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg></div>
+      </div>
+      <div style="flex:1;display:flex;min-height:0">
+
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:baseline;gap:8px;padding:16px 22px 8px"><span style="font:600 10px 'Geist Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">Tus tags</span><span style="font:600 10px 'Geist Mono',monospace;color:var(--muted)">{{ tagCount }}</span></div>
+          <div style="flex:1;overflow-y:auto;padding:0 22px 10px">
+            <sc-for list="{{ tagRows }}" as="t" hint-placeholder-count="3">
+              <sc-if value="{{ t.notEditing }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;align-items:center;gap:11px;padding:9px 4px;border-bottom:1px solid var(--border-soft)">
+                  <span style="{{ t.dotStyle }}"></span>
+                  <span style="flex:1;font:500 13.5px Geist;color:var(--ink)">{{ t.label }}</span>
+                  <span style="font:600 11px 'Geist Mono',monospace;color:var(--muted)">{{ t.count }}</span>
+                  <div onClick="{{ t.startEdit }}" title="Editar" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16.2 4.8 13 13 4.8a1.4 1.4 0 0 1 2 2L6.8 15 4 16.2z"/><path d="M12 6l2 2"/></svg></div>
+                  <div onClick="{{ t.del }}" title="Eliminar" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h12M7.5 6V4.5h5V6M5.5 6 6.4 16h7.2L14.5 6"/></svg></div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ t.isEditing }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:12px;border:1px solid var(--border);border-radius:11px;background:var(--surface);margin:4px 0">
+                  <input value="{{ editName }}" onChange="{{ onEditName }}" style="width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:8px;background:var(--paper);color:var(--ink);font:500 13.5px Geist;outline:none;margin-bottom:11px">
+                  <div style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px"><sc-for list="{{ editPalette }}" as="p" hint-placeholder-count="8"><div onClick="{{ p.pick }}" style="{{ p.style }}"></div></sc-for></div>
+                  <div style="display:flex;gap:8px;justify-content:flex-end">
+                    <button onClick="{{ cancelEdit }}" style="padding:7px 14px;background:transparent;border:1px solid var(--border);border-radius:8px;font:600 12.5px Geist;color:var(--ink2);cursor:pointer" style-hover="background:var(--row-hover)">Cancelar</button>
+                    <button onClick="{{ saveEdit }}" style="padding:7px 15px;background:var(--moss);border:none;border-radius:8px;font:600 12.5px Geist;color:var(--on-moss);cursor:pointer" style-hover="background:var(--moss-hover)">Guardar</button>
+                  </div>
+                </div>
+              </sc-if>
+            </sc-for>
+          </div>
+          <div style="border-top:1px solid var(--border);padding:14px 22px;background:var(--surface)">
+            <div style="font:600 10px 'Geist Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Crear nuevo</div>
+            <div style="display:flex;gap:10px;align-items:center">
+              <input value="{{ newName }}" onChange="{{ onNewName }}" placeholder="Nombre del tag" style="flex:1;min-width:0;padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--paper);color:var(--ink);font:500 13.5px Geist;outline:none">
+              <button onClick="{{ createTag }}" style="flex:none;display:inline-flex;align-items:center;gap:6px;padding:9px 15px;background:var(--moss);border:none;border-radius:9px;font:600 12.5px Geist;color:var(--on-moss);cursor:pointer" style-hover="background:var(--moss-hover)"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M10 4v12M4 10h12"/></svg>Crear</button>
+            </div>
+            <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:12px"><sc-for list="{{ newPalette }}" as="p" hint-placeholder-count="8"><div onClick="{{ p.pick }}" style="{{ p.style }}"></div></sc-for></div>
+          </div>
+        </div>
+
+        <div style="width:288px;flex:none;border-left:1px solid var(--border);display:flex;flex-direction:column;background:var(--surface)">
+          <div style="padding:16px 18px 6px">
+            <div style="font:600 10px 'Geist Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Sugeridos</div>
+            <div style="font:400 11.5px/1.45 Geist;color:var(--muted)">Temas recurrentes en tus correos. Adoptalos como tag con un toque.</div>
+          </div>
+          <div style="flex:1;overflow-y:auto;padding:8px 14px 14px">
+            <sc-for list="{{ suggestedRows }}" as="s" hint-placeholder-count="6">
+              <div style="display:flex;align-items:center;gap:10px;padding:9px 11px;border:1px solid var(--border);border-radius:11px;background:var(--paper);margin-bottom:8px">
+                <span style="{{ s.dotStyle }}"></span>
+                <div style="flex:1;min-width:0"><div style="font:500 12.5px Geist;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.label }}</div><div style="font:500 10px 'Geist Mono',monospace;color:var(--muted);margin-top:1px">{{ s.count }}</div></div>
+                <div onClick="{{ s.adopt }}" title="Agregar como tag" style="width:28px;height:28px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid var(--border);color:var(--moss);cursor:pointer" style-hover="background:var(--tint)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M10 4v12M4 10h12"/></svg></div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ noSuggested }}" hint-placeholder-val="{{ false }}"><div style="padding:20px 8px;text-align:center;font:400 12px/1.5 Geist;color:var(--muted)">Adoptaste todos los sugeridos. Aparecerán nuevos a medida que lleguen correos.</div></sc-if>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div onClick="{{ closeCmd }}" style="{{ cmdBackdropStyle }}"></div>
+<div style="{{ cmdPanelStyle }}">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:0 30px 80px -24px rgba(0,0,0,.5);overflow:hidden">
+    <div style="display:flex;align-items:center;gap:13px;padding:16px 18px">
+      <div style="width:22px;height:22px;flex:none;color:var(--muted);display:flex;align-items:center;justify-content:center">
+        <sc-if value="{{ listening }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 100 100" style="animation:zrotate 5.6s cubic-bezier(.7,0,.2,1) infinite"><defs><mask id="zi-listen"><rect x="8" y="8" width="84" height="84" rx="20" fill="#fff"></rect><rect x="35" y="35" width="30" height="30" rx="9" fill="#000"></rect></mask></defs><rect x="8" y="8" width="84" height="84" rx="20" fill="var(--moss)" mask="url(#zi-listen)"></rect></svg></sc-if>
+        <sc-if value="{{ notListening }}" hint-placeholder-val="{{ true }}"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6"/><path d="m17 17-3.5-3.5"/></svg></sc-if>
+      </div>
+      <input value="{{ cmdText }}" onInput="{{ onCmdInput }}" autofocus placeholder="Buscar mensajes o redactar… 'mail a Marco', 'facturas de junio'" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font:400 17px Geist;color:var(--ink)" />
+      <div onClick="{{ toggleMic }}" title="Dictar" style="{{ micStyle }}"><svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="4" height="9" rx="2"/><path d="M5 10a5 5 0 0 0 10 0M10 15v2"/></svg></div>
+    </div>
+
+    <sc-if value="{{ listening }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:11px;padding:13px 18px;border-top:1px solid var(--border-soft);background:var(--tint)">
+        <div style="display:flex;align-items:flex-end;gap:3px;height:18px">
+          <span style="width:3px;height:8px;border-radius:2px;background:var(--moss);animation:zbar 0.9s ease-in-out infinite"></span>
+          <span style="width:3px;height:16px;border-radius:2px;background:var(--moss);animation:zbar 0.9s ease-in-out infinite 0.15s"></span>
+          <span style="width:3px;height:11px;border-radius:2px;background:var(--moss);animation:zbar 0.9s ease-in-out infinite 0.3s"></span>
+          <span style="width:3px;height:18px;border-radius:2px;background:var(--moss);animation:zbar 0.9s ease-in-out infinite 0.45s"></span>
+          <span style="width:3px;height:9px;border-radius:2px;background:var(--moss);animation:zbar 0.9s ease-in-out infinite 0.6s"></span>
+        </div>
+        <span style="font:500 13.5px Geist;color:var(--ink)">Escuchando… buscá o dictá un mensaje</span>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ cmdShowCompose }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top:1px solid var(--border-soft);padding:14px 18px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <svg width="14" height="14" viewBox="0 0 100 100"><defs><mask id="zi-cmd"><rect x="8" y="8" width="84" height="84" rx="20" fill="#fff"></rect><rect x="35" y="35" width="30" height="30" rx="9" fill="#000"></rect></mask></defs><rect x="8" y="8" width="84" height="84" rx="20" fill="var(--moss)" mask="url(#zi-cmd)"></rect></svg>
+          <span style="font:600 10.5px 'Geist Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--moss)">Zelvem entendió</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 15px;background:var(--paper);border:1px solid var(--border);border-radius:12px">
+          <div style="width:40px;height:40px;flex:none;border-radius:10px;background:var(--tint);color:var(--moss);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="14" height="11" rx="1.6"/><path d="m3.6 6.2 6.4 4.6 6.4-4.6"/></svg></div>
+          <div style="flex:1;min-width:0">
+            <div style="font:600 10px 'Geist Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Nuevo borrador</div>
+            <div style="font:600 15px Geist;color:var(--ink);margin-bottom:8px;text-wrap:pretty">{{ cmdComposeTitle }}</div>
+            <div style="display:flex;gap:7px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;padding:3px 9px;background:var(--chip);border:1px solid var(--border);border-radius:7px;font:500 11.5px 'Geist Mono',monospace;color:var(--ink2)">Para: {{ cmdComposeTo }}</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:13px 18px;border-top:1px solid var(--border-soft)">
+        <span style="flex:1;font:400 12.5px Geist;color:var(--muted)">Se abre en tu redacción</span>
+        <button onClick="{{ cmdCompose }}" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;background:var(--moss);color:var(--on-moss);border:none;border-radius:9px;font:600 12.5px Geist;cursor:pointer" style-hover="background:var(--moss-hover)">Abrir redacción<kbd style="font:600 10px 'Geist Mono',monospace;background:rgba(255,255,255,.18);border-radius:4px;padding:1px 5px">↵</kbd></button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ cmdShowResults }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top:1px solid var(--border-soft);padding:8px 8px 6px">
+        <sc-if value="{{ cmdHasResults }}" hint-placeholder-val="{{ true }}">
+          <div style="font:600 10px 'Geist Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:6px 10px 8px">{{ cmdResultCount }}</div>
+          <sc-for list="{{ cmdResults }}" as="r" hint-placeholder-count="3">
+            <div onClick="{{ r.go }}" style="display:flex;align-items:center;gap:12px;padding:10px 10px;border-radius:9px;cursor:pointer" style-hover="background:var(--tint)">
+              <div style="width:28px;height:28px;flex:none;border-radius:7px;background:var(--avatar);color:var(--ink2);display:flex;align-items:center;justify-content:center"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="14" height="11" rx="1.6"/><path d="m3.6 6.2 6.4 4.6 6.4-4.6"/></svg></div>
+              <div style="flex:1;min-width:0"><div style="display:flex;align-items:baseline;gap:8px"><span style="font:600 13.5px Geist;color:var(--ink)">{{ r.sender }}</span><span style="font:400 12.5px Geist;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.subject }}</span></div></div>
+              <span style="font:500 10px 'Geist Mono',monospace;letter-spacing:.06em;color:var(--muted);flex:none">{{ r.account }}</span>
+              <span style="font:500 11px 'Geist Mono',monospace;color:var(--muted);flex:none">{{ r.time }}</span>
+            </div>
+          </sc-for>
+        </sc-if>
+        <sc-if value="{{ cmdNoResults }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:22px 12px;text-align:center;font:400 13px/1.5 Geist;color:var(--muted)">Sin resultados. Probá con el nombre de alguien, una cuenta o una palabra del asunto.</div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ cmdShowEmpty }}" hint-placeholder-val="{{ true }}">
+      <div style="border-top:1px solid var(--border-soft);padding:12px 10px 8px">
+        <div style="font:600 10px 'Geist Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:4px 8px 8px">Buscar o redactar</div>
+        <sc-for list="{{ examplesE }}" as="ex" hint-placeholder-count="4">
+          <div onClick="{{ ex.pick }}" style="display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:9px;cursor:pointer" style-hover="background:var(--tint)">
+            <div style="width:26px;height:26px;flex:none;border-radius:7px;background:var(--chip);color:var(--muted);display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6"/><path d="m17 17-3.5-3.5"/></svg></div>
+            <span style="flex:1;font:400 13.5px Geist;color:var(--ink)">{{ ex.text }}</span>
+            <span style="font:600 10px 'Geist Mono',monospace;letter-spacing:.06em;color:var(--muted)">{{ ex.tag }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <div style="display:flex;align-items:center;gap:14px;padding:10px 18px;border-top:1px solid var(--border-soft);background:var(--paper)">
+      <span style="flex:1"></span>
+      <span style="font:500 10.5px 'Geist Mono',monospace;color:var(--muted)">↵ ejecutar · esc cerrar</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light' | 'dark'&quot;,&quot;section&quot;:&quot;Apariencia&quot;},&quot;view&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;digest&quot;,&quot;inbox&quot;],&quot;default&quot;:&quot;digest&quot;,&quot;tsType&quot;:&quot;'digest' | 'inbox'&quot;,&quot;section&quot;:&quot;Vista&quot;}}">
+class Component extends DCLogic {
+  state = {
+    theme: null, view: 'digest', hovered: null, composeOpen: false, composeMode: 'new',
+    cmdOpen: false, cmdText: '', listening: false, selectedMsg: 'm0',
+    batchOpen: false, bi: 0, batchTone: {}, batchText: {}, batchStatus: {},
+    tagsOpen: false, editId: null, editName: '', editColor: '', newName: '', newColor: '#C79A3A',
+    tags: [
+      { id: 't1', label: 'Seguir', color: '#9C6B4F', count: 6 },
+      { id: 't2', label: 'Leer luego', color: '#5B6B84', count: 12 },
+      { id: 't3', label: 'Importante', color: '#3F5D42', count: 4 }
+    ],
+    suggested: [
+      { id: 's1', label: 'Facturas / pagos', color: '#C79A3A', count: 3 },
+      { id: 's2', label: 'Newsletters técnicas', color: '#5B6B84', count: 18 },
+      { id: 's3', label: 'Ofertas de proveedores', color: '#8A8579', count: 10 },
+      { id: 's4', label: 'Roadmap Q3', color: '#7A5A8A', count: 5 },
+      { id: 's5', label: 'Incidentes / on-call', color: '#B5675A', count: 2 },
+      { id: 's6', label: 'Entrevistas', color: '#4F7A6B', count: 4 }
+    ]
+  };
+  applyTheme(t) {
+    var DARK = {
+      '--paper': '#141110', '--surface': '#1E1A15', '--border': '#37312A', '--border-soft': '#241F1A',
+      '--ink': '#F2F0E9', '--ink2': '#ABA08E', '--muted': '#7C7567',
+      '--moss': '#6E9A73', '--moss-hover': '#7EAA83', '--on-moss': '#11140E',
+      '--chip': '#262019', '--dot': '#463F35', '--avatar': '#262019', '--tint': 'rgba(110,154,115,.16)',
+      '--tint2': 'rgba(110,154,115,.10)', '--aBord': 'rgba(110,154,115,.32)',
+      '--row-hover': '#221D17', '--cluster-head': '#1B1712', '--filter-on': '#2A241D'
+    };
+    try {
+      var el = document.documentElement;
+      el.setAttribute('data-theme', t);
+      if (t === 'dark') { for (var k in DARK) el.style.setProperty(k, DARK[k]); }
+      else { for (var k2 in DARK) el.style.removeProperty(k2); }
+    } catch (e) {}
+  }
+  componentDidMount() {
+    var t = null;
+    try { t = localStorage.getItem('zelvem-theme'); } catch (e) {}
+    if (t !== 'light' && t !== 'dark') t = this.props.theme || 'light';
+    var v = this.props.view;
+    this.applyTheme(t);
+    this.setState({ theme: t, view: (v === 'digest' || v === 'inbox') ? v : 'digest' });
+    var self = this;
+    this._onKey = function (e) {
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) { e.preventDefault(); self.setState(function (s) { return { cmdOpen: !s.cmdOpen }; }); }
+      else if (e.key === 'Escape' && self.state.cmdOpen) { self.setState({ cmdOpen: false }); }
+    };
+    document.addEventListener('keydown', this._onKey);
+  }
+  componentWillUnmount() {
+    if (this._onKey) document.removeEventListener('keydown', this._onKey);
+    if (this._micT) clearTimeout(this._micT);
+  }
+  componentDidUpdate() {
+    if (this.state.theme) this.applyTheme(this.state.theme);
+  }
+  renderVals() {
+    var self = this;
+    var theme = this.state.theme || this.props.theme || 'light';
+    var view = this.state.view || 'digest';
+    var toggle = function () {
+      var next = theme === 'dark' ? 'light' : 'dark';
+      try { localStorage.setItem('zelvem-theme', next); } catch (e) {}
+      self.applyTheme(next);
+      self.setState({ theme: next });
+    };
+    var hov = this.state.hovered;
+    var setHover = function (id) { self.setState({ hovered: id }); };
+    var selectedMap = this.state.selected || {};
+    var selectedCount = Object.keys(selectedMap).length;
+    var mkToggleSel = function (id) { return function (e) { if (e) e.stopPropagation(); self.setState(function (s) { var n = Object.assign({}, s.selected); if (n[id]) delete n[id]; else n[id] = true; return { selected: n }; }); }; };
+    var clearSel = function () { self.setState({ selected: {} }); };
+    var applyBulk = function () { self.setState({ selected: {} }); };
+    var deco = function (it) {
+      return Object.assign({}, it, {
+        isHovered: it.id === hov,
+        notHovered: it.id !== hov,
+        onEnter: function () { setHover(it.id); },
+        onLeave: function () { setHover(null); }
+      });
+    };
+    var needsReply = [
+      { id: 'r1', msgId: 'm0', account: 'TRABAJO', sender: 'Marco Díaz', subject: 'respondió tus comentarios en #482', summary: 'Listo para tu re-review del refactor de auth middleware.', theme: 'Pull requests', time: '9:12' },
+      { id: 'r2', msgId: 'm1', account: 'TRABAJO', sender: 'Valentina Ruiz', subject: 'Entrevista técnica del viernes', summary: 'Confirmá disponibilidad 15:00–16:00 para el panel.', theme: 'Reclutamiento', time: '8:47' },
+      { id: 'r3', msgId: 'm2', account: 'TRABAJO', sender: 'AWS Billing', subject: 'Factura de junio disponible — $1,284', summary: 'Subió 18% por el cluster de staging. Revisá antes del 5.', theme: 'Facturas / pagos', time: '7:30' },
+      { id: 'r4', msgId: 'm3', account: 'PERSONAL', sender: 'Diego', subject: 'El deploy de tu proyecto quedó pinchado', summary: 'Falla el build en CI desde anoche, ¿lo mirás cuando puedas?', theme: 'Proyecto personal', time: '6:58' }
+    ].map(deco).map(function (r) { r.open = function () { self.setState({ view: 'inbox', selectedMsg: r.msgId }); }; return r; });
+    var prRows = [
+      { id: 'p1', account: 'OSS', sender: 'Dependabot', subject: 'Bump next 14.2.3 → 14.2.5', meta: 'auto-merge ok', time: '9:03' },
+      { id: 'p2', account: 'TRABAJO', sender: 'CI Bot', subject: 'Todos los checks pasaron en #479', meta: 'sin acción', time: '8:21' }
+    ].map(deco);
+    var recRows = [
+      { id: 'c1', account: 'PERSONAL', sender: 'LinkedIn', subject: '5 mensajes nuevos de reclutadores', meta: 'agrupado', time: '7:55' },
+      { id: 'c2', account: 'TRABAJO', sender: 'Talent · Infra', subject: 'Seguimiento del rol de Platform', meta: 'baja prioridad', time: 'ayer' }
+    ].map(deco);
+    var collapsed = [
+      { id: 'g1', name: 'Facturas / pagos', count: 3, gist: 'AWS, Vercel, dominio anual · 1 vence pronto' },
+      { id: 'g2', name: 'Newsletters técnicas', count: 18, gist: 'Zelvem archivó 14 · destacó 4 para más tarde' },
+      { id: 'g3', name: 'Tu proyecto personal', count: 5, gist: '2 issues nuevos, 1 mención de Diego, 2 stars' },
+      { id: 'g4', name: 'Ofertas de proveedores', count: 10, gist: 'Datadog, Vercel Pro, Sentry · nada urgente' }
+    ].map(deco);
+
+    var messages = [
+      { sender: 'Marco Díaz', account: 'TRABAJO', subject: 'Re: refactor auth middleware', preview: 'Listo para tu re-review del #482 — quedó desacoplado del store de sesión.', time: '9:12', unread: true, starred: true, tagLabel: 'Pull requests', tagColor: '#3F5D42', open: true },
+      { sender: 'Valentina Ruiz', account: 'TRABAJO', subject: 'Entrevista técnica del viernes', preview: 'Confirmá disponibilidad 15:00–16:00 para el panel.', time: '8:47', unread: true, starred: false, tagLabel: 'Reclutamiento', tagColor: '#5B6B84', open: false },
+      { sender: 'AWS Billing', account: 'TRABAJO', subject: 'Factura de junio — $1,284', preview: 'Subió 18% por el cluster de staging. Revisá antes del 5.', time: '7:30', unread: false, starred: false, tagLabel: 'Facturas', tagColor: '#9C6B4F', open: false },
+      { sender: 'Diego', account: 'PERSONAL', subject: 'El deploy quedó pinchado', preview: 'Falla el build en CI desde anoche, ¿lo mirás cuando puedas?', time: '6:58', unread: true, starred: false, tagLabel: 'Proyecto', tagColor: '#8A8579', open: false },
+      { sender: 'Lucía Fernández', account: 'TRABAJO', subject: 'Notas del 1:1', preview: 'Te dejo los puntos que hablamos hoy.', time: 'ayer', unread: false, starred: true, tagLabel: 'Equipo', tagColor: '#5B6B84', open: false },
+      { sender: 'Dependabot', account: 'OSS', subject: 'Bump next 14.2.3 → 14.2.5', preview: 'auto-merge ok · sin conflictos', time: 'ayer', unread: false, starred: false, tagLabel: 'Pull requests', tagColor: '#3F5D42', open: false },
+      { sender: 'LinkedIn', account: 'PERSONAL', subject: '5 mensajes de reclutadores', preview: 'Agrupado · baja prioridad', time: 'lun', unread: false, starred: false, tagLabel: '', tagColor: '', open: false },
+      { sender: 'GitHub', account: 'OSS', subject: 'Weekly digest', preview: '3 issues nuevos, 2 stars', time: 'lun', unread: false, starred: false, tagLabel: '', tagColor: '', open: false }
+    ];
+    var selMsg = this.state.selectedMsg || 'm0';
+    var mkSelectMsg = function (id) { return function () { self.setState({ selectedMsg: id }); }; };
+    messages.forEach(function (m, i) {
+      m.id = 'm' + i;
+      m.selected = !!selectedMap[m.id];
+      m.isSel = selMsg === m.id;
+      m.select = mkSelectMsg(m.id);
+      m.toggle = mkToggleSel(m.id);
+      m.boxStyle = 'width:18px;height:18px;flex:none;border-radius:5px;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-top:2px;' + (m.selected ? 'background:var(--moss);' : 'background:var(--paper);box-shadow:inset 0 0 0 1.5px var(--border);');
+      var bg = m.selected ? 'background:var(--tint);' : (m.isSel ? 'background:var(--filter-on);box-shadow:inset 3px 0 0 var(--moss);' : '');
+      m.rowStyle = 'display:flex;gap:11px;padding:12px 15px 12px 12px;border-bottom:1px solid var(--border-soft);cursor:pointer;' + bg;
+      m.senderStyle = 'font:' + (m.unread ? '600' : '500') + ' 13.5px Geist;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+      m.subjStyle = 'font:' + (m.unread ? '600' : '400') + ' 13px Geist;color:' + (m.unread ? 'var(--ink)' : 'var(--ink2)') + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+      m.hasTag = !!m.tagLabel;
+    });
+    var threadsById = {
+      m0: {
+        subject: 'Re: refactor auth middleware', tagLabel: 'Pull requests', tagColor: '#3F5D42',
+        to: 'Trabajo · marco@empresa.com', replyTo: 'Marco Díaz', moreLabel: 'Ver los 8 de Marco Díaz',
+        summary: 'Marco resolvió tus comentarios en el #482 y los tests pasan. Espera tu re-review para mergear.',
+        actions: ['Re-review y merge', 'Responder', 'Posponer a mañana'],
+        msgs: [
+          { initials: 'MD', from: 'Marco Díaz', time: '9:12', isMe: false, bodyLines: ['Che, ya dejé resueltos tus comentarios en el #482.', 'El middleware quedó desacoplado del store de sesión — los tests de integración ahora pasan en 1.2s.', '¿Le das una última mirada cuando puedas?'] },
+          { initials: 'TR', from: 'Tomás (vos)', time: '9:20', isMe: true, bodyLines: ['Genial, lo miro después del standup y te confirmo.'] },
+          { initials: 'MD', from: 'Marco Díaz', time: '9:24', isMe: false, bodyLines: ['Perfecto, gracias. Sin apuro.'] }
+        ]
+      },
+      m1: {
+        subject: 'Entrevista técnica del viernes', tagLabel: 'Reclutamiento', tagColor: '#5B6B84',
+        to: 'Trabajo · valentina@empresa.com', replyTo: 'Valentina Ruiz', moreLabel: 'Ver los 3 de Valentina',
+        summary: 'Valentina necesita que confirmes disponibilidad el viernes de 15:00 a 16:00 para el panel técnico.',
+        actions: ['Confirmar 15–16', 'Proponer otro horario', 'Agregar al calendario'],
+        msgs: [
+          { initials: 'VR', from: 'Valentina Ruiz', time: '8:47', isMe: false, bodyLines: ['Hola Tomás, estamos cerrando el panel técnico del candidato para el viernes.', '¿Te queda bien de 15:00 a 16:00? Serían vos, Lucía y alguien de infra.', 'Cuando confirmes te mando el link y el CV.'] }
+        ]
+      },
+      m2: {
+        subject: 'Factura de junio — $1,284', tagLabel: 'Facturas', tagColor: '#9C6B4F',
+        to: 'Trabajo · billing@aws.com', replyTo: 'AWS Billing', moreLabel: 'Ver todas de AWS',
+        summary: 'La factura subió 18% ($1,284) por el cluster de staging encendido 24/7. Vence el 5 de julio.',
+        actions: ['Reenviar a finanzas', 'Marcar como pagada', 'Recordar el 4'],
+        msgs: [
+          { initials: 'AW', from: 'AWS Billing', time: '7:30', isMe: false, bodyLines: ['Tu factura de junio ya está disponible: USD 1,284.00.', 'El 62% corresponde a EC2 (cluster de staging). Vence el 05/07.'] }
+        ]
+      },
+      m3: {
+        subject: 'El deploy quedó pinchado', tagLabel: 'Proyecto', tagColor: '#8A8579',
+        to: 'Personal · diego@gmail.com', replyTo: 'Diego', moreLabel: 'Ver los 12 de Diego',
+        summary: 'El build de CI falla desde anoche y frena el deploy. Diego pide que lo mires cuando puedas.',
+        actions: ['Revisar CI ahora', 'Responder', 'Crear tarea'],
+        msgs: [
+          { initials: 'DG', from: 'Diego', time: '6:58', isMe: false, bodyLines: ['Loco, el build viene fallando en CI desde anoche y el deploy quedó frenado.', 'Parece el cache de pnpm de nuevo, pero no estoy seguro. ¿Lo mirás cuando puedas?'] }
+        ]
+      },
+      m4: {
+        subject: 'Notas del 1:1', tagLabel: 'Equipo', tagColor: '#5B6B84',
+        to: 'Trabajo · lucia@empresa.com', replyTo: 'Lucía Fernández', moreLabel: 'Ver los 6 de Lucía',
+        summary: 'Lucía te dejó los puntos del 1:1: prioridades de Q3, el rol abierto de infra y tu feedback de carrera.',
+        actions: ['Responder', 'Guardar en notas', 'Marcar destacado'],
+        msgs: [
+          { initials: 'LF', from: 'Lucía Fernández', time: 'ayer', isMe: false, bodyLines: ['Te dejo los puntos que hablamos hoy:', '1) Cerrar el scope de Q3 antes del viernes.', '2) Avanzar con la búsqueda de infra.', '3) Tu plan de crecimiento — lo retomamos en dos semanas.'] }
+        ]
+      },
+      m5: {
+        subject: 'Bump next 14.2.3 → 14.2.5', tagLabel: 'Pull requests', tagColor: '#3F5D42',
+        to: 'Open source · notifications@github.com', replyTo: 'Dependabot', moreLabel: 'Ver todas de Dependabot',
+        summary: 'Actualización automática de dependencias. Sin conflictos y con auto-merge habilitado — no requiere acción.',
+        actions: ['Aprobar y mergear', 'Ignorar esta versión'],
+        msgs: [
+          { initials: 'DB', from: 'Dependabot', time: 'ayer', isMe: false, bodyLines: ['Bumps next from 14.2.3 to 14.2.5.', 'Sin conflictos. Auto-merge habilitado — se integrará cuando pasen los checks.'] }
+        ]
+      },
+      m6: {
+        subject: '5 mensajes de reclutadores', tagLabel: '', tagColor: '',
+        to: 'Personal · messaging@linkedin.com', replyTo: 'LinkedIn', moreLabel: 'Ver todos de LinkedIn',
+        summary: 'Zelvem agrupó 5 mensajes de reclutadores de baja prioridad. Nada urgente ni personalizado.',
+        actions: ['Archivar todos', 'Ver de a uno'],
+        msgs: [
+          { initials: 'IN', from: 'LinkedIn', time: 'lun', isMe: false, bodyLines: ['Tenés 5 mensajes nuevos de reclutadores.', 'Agrupados por baja prioridad — ninguno menciona algo específico de tu perfil.'] }
+        ]
+      },
+      m7: {
+        subject: 'Weekly digest', tagLabel: '', tagColor: '',
+        to: 'Open source · digest@github.com', replyTo: 'GitHub', moreLabel: 'Ver todas de GitHub',
+        summary: 'Resumen semanal de tus repos: 3 issues nuevos y 2 stars. Sin nada que requiera respuesta.',
+        actions: ['Ver issues', 'Archivar'],
+        msgs: [
+          { initials: 'GH', from: 'GitHub', time: 'lun', isMe: false, bodyLines: ['Tu resumen semanal: 3 issues nuevos, 2 stars.', 'Actividad tranquila esta semana en tus repos.'] }
+        ]
+      }
+    };
+    var thread = threadsById[selMsg] || threadsById.m0;
+    thread.hasTag = !!thread.tagLabel;
+    thread.actionChips = thread.actions.map(function (a, i) {
+      return { label: a, primary: i === 0,
+        chipStyle: 'display:inline-flex;align-items:center;padding:6px 13px;border-radius:8px;font:600 12px Geist;cursor:pointer;' + (i === 0 ? 'background:var(--moss);color:var(--on-moss);' : 'background:var(--surface);border:1px solid var(--border);color:var(--ink2);') };
+    });
+    thread.replyPlaceholder = 'Responder a ' + thread.replyTo + '…';
+    thread.msgs.forEach(function (mm) {
+      mm.avatarStyle = mm.isMe ? 'background:var(--moss);color:var(--on-moss);' : 'background:var(--avatar);color:var(--ink2);';
+    });
+    var accounts = [
+      { label: 'Trabajo', color: '#3F5D42', count: 31 },
+      { label: 'Personal', color: '#5B6B84', count: 9 },
+      { label: 'Open source', color: '#9C6B4F', count: 7 }
+    ];
+    var palette = ['#3F5D42', '#5B6B84', '#9C6B4F', '#C79A3A', '#7A5A8A', '#4F7A6B', '#B5675A', '#8A8579'];
+    var st = this.state;
+    function swatchStyle(c, sel) {
+      return 'width:26px;height:26px;border-radius:8px;background:' + c + ';cursor:pointer;box-shadow:0 0 0 1px var(--border)' + (sel ? ',0 0 0 3px var(--paper),0 0 0 5px var(--ink)' : '') + ';';
+    }
+    var openTags = function () { self.setState({ tagsOpen: true, editId: null, newName: '' }); };
+    var closeTags = function () { self.setState({ tagsOpen: false, editId: null }); };
+    var stopEvt = function (e) { e.stopPropagation(); };
+    var onNewName = function (e) { self.setState({ newName: e.target.value }); };
+    var onEditName = function (e) { self.setState({ editName: e.target.value }); };
+    var createTag = function () {
+      var n = (self.state.newName || '').trim(); if (!n) return;
+      self.setState(function (s) { return { tags: s.tags.concat([{ id: 'g' + Date.now(), label: n, color: s.newColor, count: 0 }]), newName: '' }; });
+    };
+    var saveEdit = function () {
+      self.setState(function (s) {
+        return { editId: null, tags: s.tags.map(function (t) { return t.id === s.editId ? Object.assign({}, t, { label: (s.editName || '').trim() || t.label, color: s.editColor }) : t; }) };
+      });
+    };
+    var cancelEdit = function () { self.setState({ editId: null }); };
+    var mkStartEdit = function (t) { return function () { self.setState({ editId: t.id, editName: t.label, editColor: t.color }); }; };
+    var mkDelete = function (id) { return function (e) { e.stopPropagation(); self.setState(function (s) { return { editId: null, tags: s.tags.filter(function (t) { return t.id !== id; }) }; }); }; };
+    var mkPickNew = function (c) { return function () { self.setState({ newColor: c }); }; };
+    var mkPickEdit = function (c) { return function () { self.setState({ editColor: c }); }; };
+    var tagRows = st.tags.map(function (t) {
+      return {
+        id: t.id, label: t.label, color: t.color, count: '' + t.count,
+        isEditing: t.id === st.editId, notEditing: t.id !== st.editId,
+        dotStyle: 'width:12px;height:12px;border-radius:50%;flex:none;background:' + t.color + ';',
+        startEdit: mkStartEdit(t), del: mkDelete(t.id)
+      };
+    });
+    var mkAdopt = function (s) { return function () { self.setState(function (st2) { return { tags: st2.tags.concat([{ id: 'a' + Date.now(), label: s.label, color: s.color, count: s.count }]), suggested: st2.suggested.filter(function (x) { return x.id !== s.id; }) }; }); }; };
+    var suggestedRows = st.suggested.map(function (s) { return { label: s.label, count: s.count + ' correos', dotStyle: 'width:11px;height:11px;border-radius:50%;flex:none;background:' + s.color + ';', adopt: mkAdopt(s) }; });
+    var tagCount = '' + st.tags.length;
+    var hasSuggested = st.suggested.length > 0;
+    var newPalette = palette.map(function (c) { return { style: swatchStyle(c, c === st.newColor), pick: mkPickNew(c) }; });
+    var editPalette = palette.map(function (c) { return { style: swatchStyle(c, c === st.editColor), pick: mkPickEdit(c) }; });
+    var tagsWrapStyle = 'position:absolute;inset:0;z-index:62;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(20,17,16,.34);transition:opacity .2s ease;' + (st.tagsOpen ? 'opacity:1;pointer-events:auto;' : 'opacity:0;pointer-events:none;');
+
+    var composeOpen = this.state.composeOpen;
+    var composeMode = this.state.composeMode;
+    var openCompose = function () { self.setState({ composeOpen: true, composeMode: 'new' }); };
+    var openReply = function () { self.setState({ composeOpen: true, composeMode: 'reply' }); };
+    var closeCompose = function () { self.setState({ composeOpen: false }); };
+    var isReply = composeMode === 'reply';
+    var composeTitle = isReply ? 'Responder' : 'Nuevo mensaje';
+    var composeTo = isReply ? 'Marco Díaz <marco@empresa.com>' : '';
+    var composeSubject = isReply ? 'Re: refactor auth middleware' : '';
+    var composeSubjectDisplay = isReply ? composeSubject : 'Asunto…';
+    var subjectColor = isReply ? 'var(--ink)' : 'var(--muted)';
+    var panelStyle = 'position:absolute;top:0;right:0;bottom:0;width:min(560px,calc(100% - 80px));z-index:60;background:var(--paper);border-left:1px solid var(--border);box-shadow:-24px 0 60px -30px rgba(0,0,0,.5);display:flex;flex-direction:column;transition:transform .28s cubic-bezier(.4,0,.2,1);transform:translateX(' + (composeOpen ? '0' : '104%') + ')';
+    var backdropStyle = 'position:absolute;inset:0;z-index:55;background:rgba(20,17,16,.28);transition:opacity .28s ease;' + (composeOpen ? 'opacity:1;pointer-events:auto;' : 'opacity:0;pointer-events:none;');
+
+    var segBase = 'flex:1;text-align:center;padding:7px 12px;font:500 12.5px Geist;cursor:pointer;';
+    var act = 'font-weight:600;color:var(--ink);background:var(--filter-on);';
+    var inact = 'color:var(--muted);';
+    var isDigest = view === 'digest', isInbox = view === 'inbox';
+    var selectedLabel = selectedCount + (selectedCount === 1 ? ' seleccionado' : ' seleccionados');
+    var bulkOn = selectedCount > 0;
+    var bulkBarStyle = 'position:absolute;left:50%;bottom:24px;z-index:50;transform:translateX(-50%) translateY(' + (bulkOn ? '0' : '20px') + ');opacity:' + (bulkOn ? '1' : '0') + ';pointer-events:' + (bulkOn ? 'auto' : 'none') + ';transition:opacity .2s ease,transform .2s ease;';
+
+    var batchDefs = [
+      { id: 'r1', account: 'TRABAJO', to: 'Marco Díaz · marco@empresa.com', avatar: 'MD',
+        subject: 'Re: respondió tus comentarios en #482',
+        context: 'Resolvió tus comentarios; el middleware quedó desacoplado del store de sesión y los tests pasan en 1.2s. Pide una última mirada al #482.',
+        drafts: {
+          directa: 'Gracias Marco. Lo reviso apenas termine el standup y, si quedó como lo hablamos, lo mergeo hoy mismo.',
+          corta: 'Perfecto, lo miro hoy y mergeamos. 👍',
+          formal: 'Hola Marco, gracias por resolver los comentarios. Realizaré la re-review del #482 después del standup y te confirmo el merge durante la mañana.',
+          declinar: 'Marco, hoy no llego a revisarlo con la atención que merece. ¿Te sirve que lo mire mañana a primera hora?'
+        } },
+      { id: 'r2', account: 'TRABAJO', to: 'Valentina Ruiz · valentina@empresa.com', avatar: 'VR',
+        subject: 'Re: Entrevista técnica del viernes',
+        context: 'Necesita que confirmes disponibilidad el viernes de 15:00 a 16:00 para el panel técnico.',
+        drafts: {
+          directa: 'Hola Valentina, confirmo disponibilidad el viernes de 15 a 16. Pasame el link del panel y con quién lo comparto.',
+          corta: 'Confirmo, viernes 15–16 me sirve. ¿Me pasás el link?',
+          formal: 'Estimada Valentina, confirmo mi disponibilidad para el viernes de 15:00 a 16:00. Quedo a la espera del enlace y los detalles del panel.',
+          declinar: 'Valentina, ese horario se me complica. ¿Habría chance de moverlo al viernes más temprano o al lunes?'
+        } },
+      { id: 'r3', account: 'TRABAJO', to: 'finanzas@empresa.com', avatar: 'AW',
+        subject: 'Factura AWS de junio — $1,284 (+18%)',
+        context: 'La factura de junio subió 18% ($1,284) por el cluster de staging. Vence el 5.',
+        drafts: {
+          directa: 'Equipo, la factura de AWS de junio subió 18% ($1,284) por el cluster de staging encendido 24/7. Propongo apagarlo fuera de horario. Adjunto el desglose.',
+          corta: 'Factura AWS junio: $1,284 (+18% por staging). ¿Apagamos el cluster fuera de horario?',
+          formal: 'Estimados, comparto la factura de AWS de junio por $1,284, con un incremento del 18% atribuible al cluster de staging. Sugiero evaluar apagarlo fuera del horario laboral. Adjunto el desglose.',
+          declinar: 'Reenvío la factura de AWS de junio para su registro. La reviso en detalle la semana que viene.'
+        } },
+      { id: 'r4', account: 'PERSONAL', to: 'Diego · diego@gmail.com', avatar: 'DG',
+        subject: 'Re: El deploy quedó pinchado',
+        context: 'El build falla en CI desde anoche y el deploy quedó frenado. Te pide que lo mires cuando puedas.',
+        drafts: {
+          directa: 'Diego, lo miro ahora. Si es lo del cache de pnpm que ya nos pasó, lo destrabo en 10 min y te aviso.',
+          corta: 'Dale, lo miro ahora y te aviso. 🙌',
+          formal: 'Hola Diego, reviso el pipeline de CI en este momento y te confirmo la causa del fallo del build a la brevedad.',
+          declinar: 'Diego, ahora estoy con otra cosa. ¿Lo miramos juntos en un rato por llamada?'
+        } }
+    ];
+    var batchTotal = batchDefs.length;
+    var bi = this.state.bi || 0;
+    var bTone = this.state.batchTone || {};
+    var bText = this.state.batchText || {};
+    var bStatus = this.state.batchStatus || {};
+    var openBatch = function () { self.setState({ batchOpen: true, bi: 0, batchTone: {}, batchText: {}, batchStatus: {} }); };
+    var closeBatch = function () { self.setState({ batchOpen: false }); };
+    var advance = function (status) {
+      self.setState(function (s) {
+        var st = Object.assign({}, s.batchStatus);
+        var cd = batchDefs[s.bi || 0];
+        if (cd) st[cd.id] = status;
+        return { batchStatus: st, bi: (s.bi || 0) + 1 };
+      });
+    };
+    var sendNext = function () { advance('sent'); };
+    var skipOne = function () { advance('skipped'); };
+    var mkSetTone = function (id, tone) { return function () { self.setState(function (s) { var t = Object.assign({}, s.batchTone); t[id] = tone; var tx = Object.assign({}, s.batchText); delete tx[id]; return { batchTone: t, batchText: tx }; }); }; };
+    var mkEditText = function (id) { return function (e) { var v = e.target.value; self.setState(function (s) { var tx = Object.assign({}, s.batchText); tx[id] = v; return { batchText: tx }; }); }; };
+
+    var batchDone = bi >= batchTotal;
+    var curDef = batchDefs[bi] || null;
+    var curTone = curDef ? (bTone[curDef.id] || 'directa') : 'directa';
+    var curText = curDef ? (bText[curDef.id] != null ? bText[curDef.id] : curDef.drafts[curTone]) : '';
+    var toneChips = [];
+    if (curDef) {
+      [['directa', 'Directa'], ['corta', 'Más corta'], ['formal', 'Más formal'], ['declinar', 'Declinar']].forEach(function (p) {
+        var on = curTone === p[0];
+        toneChips.push({ label: p[1], set: mkSetTone(curDef.id, p[0]),
+          style: 'padding:7px 13px;border-radius:8px;font:600 12px Geist;cursor:pointer;border:1px solid ' + (on ? 'var(--moss)' : 'var(--border)') + ';' + (on ? 'background:var(--tint);color:var(--moss);' : 'background:transparent;color:var(--ink2);') });
+      });
+    }
+    var progSegs = batchDefs.map(function (d, i) {
+      var fill = i < bi ? (bStatus[d.id] === 'skipped' ? 'var(--muted)' : 'var(--moss)') : (i === bi ? 'var(--ink2)' : 'var(--border)');
+      return { style: 'flex:1;height:4px;border-radius:99px;background:' + fill + ';' };
+    });
+    var sentCount = 0, skipCount = 0;
+    Object.keys(bStatus).forEach(function (k) { if (bStatus[k] === 'sent') sentCount++; else if (bStatus[k] === 'skipped') skipCount++; });
+    var doneTitle = sentCount + (sentCount === 1 ? ' respuesta enviada' : ' respuestas enviadas');
+    var doneSub = skipCount > 0
+      ? ('Salieron ' + sentCount + ' respuestas. Dejaste ' + skipCount + ' para más tarde — vuelven a tu bandeja de pendientes.')
+      : 'Los 4 correos salieron de tu lista de pendientes. No queda nada esperando tu decisión.';
+    var batchWrapStyle = 'position:absolute;inset:0;z-index:70;background:var(--paper);display:flex;flex-direction:column;transition:opacity .22s ease;' + (this.state.batchOpen ? 'opacity:1;pointer-events:auto;' : 'opacity:0;pointer-events:none;');
+
+    var openCmd = function () { self.setState({ cmdOpen: true }); };
+    var closeCmd = function () { self.setState({ cmdOpen: false, listening: false }); };
+    var onCmdInput = function (e) { self.setState({ cmdText: e.target.value }); };
+    var setExampleE = function (txt) { return function () { self.setState({ cmdText: txt, listening: false }); }; };
+    var toggleMicE = function () {
+      if (self.state.listening) { self.setState({ listening: false }); if (self._micT) clearTimeout(self._micT); return; }
+      self.setState({ listening: true });
+      self._micT = setTimeout(function () { self.setState({ listening: false, cmdText: 'Mail a Valentina: confirmo el viernes' }); }, 1700);
+    };
+    function capE(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+    var cmdQ = (this.state.cmdText || '').trim();
+    var cmdQlow = cmdQ.toLowerCase();
+    var cmdIsCompose = /(^|\s)(mail|correo)\s+a\s+|escrib\w*\s+a\s+|redact|responder\s+a\s+|contestar\s+a\s+|escribile/.test(cmdQlow);
+    var cmdCompose = function () { self.setState({ cmdOpen: false, listening: false, composeOpen: true, composeMode: 'new' }); };
+    var cmdComposeTo = '';
+    if (cmdIsCompose) { var mmm = cmdQlow.match(/a\s+([a-záéíóúñ]+)/); cmdComposeTo = mmm ? capE(mmm[1]) : '—'; }
+    var cmdResults = [];
+    if (cmdQ && !cmdIsCompose) {
+      var toks = cmdQlow.split(/\s+/).filter(function (x) { return x.length > 1 && x !== 'de' && x !== 'del'; });
+      cmdResults = messages.filter(function (m) {
+        var hay = (m.sender + ' ' + m.subject + ' ' + m.preview + ' ' + m.account).toLowerCase();
+        return toks.length === 0 || toks.every(function (tk) { return hay.indexOf(tk) >= 0; });
+      }).slice(0, 6).map(function (m) {
+        return { sender: m.sender, subject: m.subject, account: m.account, time: m.time, go: function () { self.setState({ cmdOpen: false, view: 'inbox' }); } };
+      });
+    }
+    var examplesE = [
+      { text: 'Mail a Valentina: confirmo el viernes', tag: 'Redactar' },
+      { text: 'facturas de junio', tag: 'Buscar' },
+      { text: 'mensajes de Marco', tag: 'Buscar' },
+      { text: 'deploy', tag: 'Buscar' }
+    ].map(function (e) { return { text: e.text, tag: e.tag, pick: setExampleE(e.text) }; });
+
+    return {
+      themeKey: 'theme-' + theme,
+      isDark: theme === 'dark', isLight: theme !== 'dark', toggle: toggle,
+      isDigest: isDigest, isInbox: isInbox,
+      showDigest: function () { self.setState({ view: 'digest' }); },
+      showInbox: function () { self.setState({ view: 'inbox' }); },
+      segDigestStyle: 'padding:7px 13px;font:500 12.5px Geist;cursor:pointer;' + (isDigest ? act : inact),
+      segInboxStyle: 'padding:7px 13px;font:500 12.5px Geist;cursor:pointer;border-left:1px solid var(--border);' + (isInbox ? act : inact),
+      segDigestStyleCol: segBase + (isDigest ? act : inact),
+      segInboxStyleCol: segBase + 'border-left:1px solid var(--border);' + (isInbox ? act : inact),
+      needsReply: needsReply, prRows: prRows, recRows: recRows, collapsed: collapsed,
+      messages: messages, thread: thread, accounts: accounts, userTags: tagRows,
+      composeOpen: composeOpen, openCompose: openCompose, openReply: openReply, closeCompose: closeCompose,
+      openCmd: openCmd, closeCmd: closeCmd, onCmdInput: onCmdInput, toggleMic: toggleMicE,
+      cmdOpen: this.state.cmdOpen, cmdText: this.state.cmdText, listening: this.state.listening, notListening: !this.state.listening,
+      micStyle: 'width:34px;height:34px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:9px;cursor:pointer;' + (this.state.listening ? 'background:var(--moss);color:var(--on-moss);' : 'background:var(--chip);color:var(--muted);'),
+      cmdBackdropStyle: 'position:fixed;inset:0;z-index:80;background:rgba(20,17,16,.38);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);transition:opacity .18s ease;' + (this.state.cmdOpen ? 'opacity:1;pointer-events:auto;' : 'opacity:0;pointer-events:none;'),
+      cmdPanelStyle: 'position:fixed;left:50%;top:13vh;z-index:81;width:min(660px,calc(100% - 40px));transform:translateX(-50%) translateY(' + (this.state.cmdOpen ? '0' : '-8px') + ');opacity:' + (this.state.cmdOpen ? '1' : '0') + ';pointer-events:' + (this.state.cmdOpen ? 'auto' : 'none') + ';transition:opacity .18s ease, transform .18s ease;',
+      cmdShowCompose: cmdIsCompose && !!cmdQ, cmdShowResults: !cmdIsCompose && !!cmdQ, cmdShowEmpty: !cmdQ,
+      cmdComposeTitle: capE(cmdQ), cmdComposeTo: cmdComposeTo, cmdCompose: cmdCompose,
+      cmdResults: cmdResults, cmdHasResults: cmdResults.length > 0, cmdNoResults: !!cmdQ && !cmdIsCompose && cmdResults.length === 0,
+      cmdResultCount: cmdResults.length + (cmdResults.length === 1 ? ' resultado' : ' resultados'),
+      examplesE: examplesE,
+      openBatch: openBatch, closeBatch: closeBatch, sendNext: sendNext, skipOne: skipOne,
+      batchWrapStyle: batchWrapStyle, batchStepLabel: (Math.min(bi + 1, batchTotal)) + ' de ' + batchTotal, progSegs: progSegs,
+      batchInProgress: !batchDone, batchDone: batchDone,
+      curAvatar: curDef ? curDef.avatar : '', curSender: curDef ? curDef.sender : '', curAccount: curDef ? curDef.account : '',
+      curSubject: curDef ? curDef.subject : '', curContext: curDef ? curDef.context : '', curTo: curDef ? curDef.to : '',
+      curText: curText, curEdit: curDef ? mkEditText(curDef.id) : function () {}, toneChips: toneChips,
+      doneTitle: doneTitle, doneSub: doneSub,
+      isReply: isReply, notReply: !isReply, composeTitle: composeTitle, composeTo: composeTo, composeSubject: composeSubject,
+      composeSubjectDisplay: composeSubjectDisplay, subjectColor: subjectColor,
+      panelStyle: panelStyle, backdropStyle: backdropStyle,
+      clearSel: clearSel, applyBulk: applyBulk, selectedLabel: selectedLabel, bulkOn: bulkOn, bulkBarStyle: bulkBarStyle,
+      openTags: openTags, closeTags: closeTags, stopEvt: stopEvt,
+      onNewName: onNewName, onEditName: onEditName, createTag: createTag, saveEdit: saveEdit, cancelEdit: cancelEdit,
+      tagRows: tagRows, newPalette: newPalette, editPalette: editPalette,
+      suggestedRows: suggestedRows, tagCount: tagCount, hasSuggested: hasSuggested, noSuggested: !hasSuggested,
+      newName: st.newName, editName: st.editName, tagsWrapStyle: tagsWrapStyle
+    };
+  }
+}
+</script>
+</body>
+</html>

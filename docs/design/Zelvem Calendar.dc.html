@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F0E9; --surface:#FBFAF6; --border:#DAD7CB; --border-soft:#E4E1D6;
+    --ink:#14171A; --ink2:#5C584E; --muted:#8A8579;
+    --moss:#3F5D42; --moss-hover:#344C37; --on-moss:#F2F0E9;
+    --chip:#EFECE3; --dot:#C9C5B7; --avatar:#E7E3D7; --tint:rgba(63,93,66,.12);
+    --surf2:#EAE7DD; --grid:#E8E5DA; --faint:#A8A293; --evwork-bd:#D7D3C7; --evwork-bg:#FBFAF6;
+    --pers:#EEEBE2; --pers-bd:#DCD8CC; --tint2:rgba(63,93,66,.07); --aBord:rgba(63,93,66,.25);
+    --free-bd:#BBB6A8; --cat-meet:#5C584E; --cat-pers:#C9C5B7;
+  }
+  html,body{margin:0;background:var(--paper);font-family:Geist,system-ui,sans-serif}
+  *{box-sizing:border-box}
+  button{font-family:inherit}
+  @keyframes zpulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
+  @keyframes zbar{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1)}}
+  @keyframes zrotate{0%,16%{transform:rotate(0)}25%,41%{transform:rotate(90deg)}50%,66%{transform:rotate(180deg)}75%,91%{transform:rotate(270deg)}100%{transform:rotate(360deg)}}
+</style>
+</helmet>
+<div style="display:flex;min-height:100vh;background:var(--paper);color:var(--ink)">
+  <aside style="width:66px;flex:none;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:18px 0;gap:3px;position:sticky;top:0;height:100vh">
+    <div style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:12px"><svg width="30" height="30" viewBox="0 0 100 100"><defs><mask id="zrail"><rect x="8" y="8" width="84" height="84" rx="20" fill="#fff"></rect><rect x="35" y="35" width="30" height="30" rx="9" fill="#000"></rect></mask></defs><rect x="8" y="8" width="84" height="84" rx="20" fill="var(--moss)" mask="url(#zrail)"></rect></svg></div>
+    <a href="Zelvem Home.dc.html" title="Inicio" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer;text-decoration:none" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 10 4l7 5.5V16a1 1 0 0 1-1 1h-3v-5H7v5H4a1 1 0 0 1-1-1z"/></svg></a>
+    <a href="Zelvem Email.dc.html" title="Email" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer;text-decoration:none" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="14" height="11" rx="1.6"/><path d="m3.6 6.2 6.4 4.6 6.4-4.6"/></svg></a>
+    <div title="Calendario" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--ink);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="12.5" rx="1.6"/><path d="M3 8h14M7 3v3M13 3v3"/></svg></div>
+    <div title="Finanzas" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14l4-4 3 2 6-6"/><path d="M16 6h-3M16 6v3"/></svg></div>
+    <div title="Tareas" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h8M8 10h8M8 14h5"/><path d="m3 6 1.2 1.2L6 5.4"/><path d="m3 13.6 1.2 1.2L6 13"/></svg></div>
+    <div title="Blog" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16.2 4.8 13 13 4.8a1.4 1.4 0 0 1 2 2L6.8 15 4 16.2z"/><path d="M12 6l2 2"/></svg></div>
+    <div title="Redes" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="10" r="2.1"/><circle cx="15" cy="5" r="2.1"/><circle cx="15" cy="15" r="2.1"/><path d="m6.9 9 6.2-2.9M6.9 11l6.2 2.9"/></svg></div>
+    <div onClick="{{ toggle }}" title="Cambiar tema" style="margin-top:auto;margin-bottom:6px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer" style-hover="color:var(--ink2);background:var(--tint)">
+      <sc-if value="{{ isLight }}" hint-placeholder-val="{{ true }}"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11.4A6.4 6.4 0 0 1 8.6 4 6.4 6.4 0 1 0 16 11.4z"/></svg></sc-if>
+      <sc-if value="{{ isDark }}" hint-placeholder-val="{{ false }}"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="3.4"/><path d="M10 2.2v2M10 15.8v2M2.2 10h2M15.8 10h2M4.4 4.4l1.4 1.4M14.2 14.2l1.4 1.4M15.6 4.4l-1.4 1.4M5.8 14.2l-1.4 1.4"/></svg></sc-if>
+    </div>
+    <a href="Zelvem Cuenta.dc.html" title="Tu cuenta" style="width:34px;height:34px;border-radius:50%;background:var(--avatar);border:1px solid var(--border);color:var(--ink2);display:flex;align-items:center;justify-content:center;font:600 11.5px 'Geist Mono',monospace;text-decoration:none;cursor:pointer" style-hover="box-shadow:0 0 0 2px var(--moss)">TR</a>
+  </aside>
+
+  <main style="flex:1;min-width:0;padding:34px 36px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:18px">
+      <div style="position:relative">
+        <div onClick="{{ toggleMonth }}" style="display:flex;align-items:center;gap:7px;cursor:pointer;user-select:none">
+          <h1 style="font:600 26px/1.1 Geist;margin:0;letter-spacing:-0.02em">{{ rangeLabel }}</h1>
+          <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="var(--muted)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="margin-top:3px"><path d="M6 8l4 4 4-4"/></svg>
+        </div>
+        <p style="margin:5px 0 0;font:400 13.5px Geist;color:var(--ink2)">{{ subLabel }}</p>
+        <sc-if value="{{ monthOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ closeMonth }}" style="position:fixed;inset:0;z-index:30"></div>
+          <div style="position:absolute;top:54px;left:0;z-index:31;width:288px;background:var(--surface);border:1px solid var(--border);border-radius:13px;box-shadow:0 16px 44px -14px rgba(0,0,0,.4);padding:15px 16px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+              <div style="font:600 13.5px Geist;color:var(--ink)">Junio 2026</div>
+              <div style="display:flex;gap:2px">
+                <div style="width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--tint)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5l-5 5 5 5"/></svg></div>
+                <div style="width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--tint)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5l5 5-5 5"/></svg></div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:4px">
+              <div style="height:22px;display:flex;align-items:center;justify-content:center;font:500 9.5px 'Geist Mono',monospace;color:var(--faint)">L</div><div style="height:22px;display:flex;align-items:center;justify-content:center;font:500 9.5px 'Geist Mono',monospace;color:var(--faint)">M</div><div style="height:22px;display:flex;align-items:center;justify-content:center;font:500 9.5px 'Geist Mono',monospace;color:var(--faint)">M</div><div style="height:22px;display:flex;align-items:center;justify-content:center;font:500 9.5px 'Geist Mono',monospace;color:var(--faint)">J</div><div style="height:22px;display:flex;align-items:center;justify-content:center;font:500 9.5px 'Geist Mono',monospace;color:var(--faint)">V</div><div style="height:22px;display:flex;align-items:center;justify-content:center;font:500 9.5px 'Geist Mono',monospace;color:var(--faint)">S</div><div style="height:22px;display:flex;align-items:center;justify-content:center;font:500 9.5px 'Geist Mono',monospace;color:var(--faint)">D</div>
+            </div>
+            <sc-for list="{{ miniWeeks }}" as="wk" hint-placeholder-count="5">
+              <div style="display:grid;grid-template-columns:repeat(7,1fr)">
+                <sc-for list="{{ wk.days }}" as="c" hint-placeholder-count="7">
+                  <div style="{{ c.wrapStyle }}">
+                    <sc-if value="{{ c.isToday }}" hint-placeholder-val="{{ false }}"><span style="width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font:600 11px 'Geist Mono',monospace">{{ c.numDisp }}</span></sc-if>
+                    <sc-if value="{{ c.notToday }}" hint-placeholder-val="{{ true }}"><span style="{{ c.numColorStyle }}">{{ c.numDisp }}</span></sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex:none">
+        <div style="display:flex;align-items:center;gap:2px;padding:2px;border:1px solid var(--border);border-radius:9px;background:var(--surface)">
+          <div style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--tint)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5l-5 5 5 5"/></svg></div>
+          <span style="font:600 12.5px Geist;color:var(--ink);padding:0 4px;cursor:pointer">Hoy</span>
+          <div style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--tint)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5l5 5-5 5"/></svg></div>
+        </div>
+        <div style="display:flex;border:1px solid var(--border);border-radius:9px;overflow:hidden;background:var(--surface)">
+          <div onClick="{{ set3d }}" style="{{ seg3dStyle }}">3 días</div>
+          <div onClick="{{ setWeek }}" style="{{ segWeekStyle }}">Semana</div>
+          <div onClick="{{ setMonth }}" style="{{ segMonthStyle }}">Mes</div>
+        </div>
+        <button onClick="{{ openNew }}" style="display:inline-flex;align-items:center;gap:6px;padding:9px 15px;background:var(--moss);color:var(--on-moss);border:none;border-radius:9px;font:600 13px Geist;cursor:pointer" style-hover="background:var(--moss-hover)"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4v12M4 10h12"/></svg>Nuevo evento</button>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:20px;padding:12px 18px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:12px">
+      <div style="font:600 11px 'Geist Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);flex:none">Esta semana</div>
+      <div style="flex:1;display:flex;height:9px;border-radius:5px;overflow:hidden;min-width:0"><div style="width:55%;background:var(--cat-meet)"></div><div style="width:27%;background:var(--moss)"></div><div style="width:18%;background:var(--cat-pers)"></div></div>
+      <div style="display:flex;gap:20px;flex:none">
+        <div style="display:flex;align-items:center;gap:8px;font:400 12.5px Geist;color:var(--ink2)"><span style="width:9px;height:9px;border-radius:3px;background:var(--cat-meet)"></span>Reuniones<strong style="font:600 12.5px 'Geist Mono',monospace;color:var(--ink)">18h</strong></div>
+        <div style="display:flex;align-items:center;gap:8px;font:400 12.5px Geist;color:var(--ink2)"><span style="width:9px;height:9px;border-radius:3px;background:var(--moss)"></span>Foco protegido<strong style="font:600 12.5px 'Geist Mono',monospace;color:var(--ink)">9h</strong></div>
+        <div style="display:flex;align-items:center;gap:8px;font:400 12.5px Geist;color:var(--ink2)"><span style="width:9px;height:9px;border-radius:3px;background:var(--cat-pers)"></span>Personal<strong style="font:600 12.5px 'Geist Mono',monospace;color:var(--ink)">6h</strong></div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;padding:11px 16px;background:var(--tint2);border:1px solid var(--aBord);border-radius:11px;margin-bottom:18px">
+      <svg width="18" height="18" viewBox="0 0 100 100" style="flex:none"><defs><mask id="zi-ban"><rect x="8" y="8" width="84" height="84" rx="20" fill="#fff"></rect><rect x="35" y="35" width="30" height="30" rx="9" fill="#000"></rect></mask></defs><rect x="8" y="8" width="84" height="84" rx="20" fill="var(--moss)" mask="url(#zi-ban)"></rect></svg>
+      <span style="flex:1;font:400 13.5px Geist;color:var(--ink)"><strong style="font-weight:600">Jueves sobrecargado:</strong> 6 reuniones seguidas sin pausa. Zelvem sugiere mover <strong style="font-weight:600">Vendor demo</strong> al viernes 11:00.</span>
+      <button style="padding:7px 14px;background:var(--moss);color:var(--on-moss);border:none;border-radius:8px;font:600 12px Geist;cursor:pointer;flex:none" style-hover="background:var(--moss-hover)">Mover</button>
+      <button style="padding:7px 12px;background:transparent;color:var(--ink2);border:1px solid var(--border);border-radius:8px;font:600 12px Geist;cursor:pointer;flex:none" style-hover="background:var(--tint)">Descartar</button>
+    </div>
+
+    <sc-if value="{{ isTimeGrid }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--surface)">
+        <div style="width:46px;flex:none;border-right:1px solid var(--border-soft);padding-top:38px">
+          <sc-for list="{{ hours }}" as="hr" hint-placeholder-count="13"><div style="height:54px;position:relative"><span style="position:absolute;top:-7px;right:7px;font:500 10px 'Geist Mono',monospace;color:var(--faint)">{{ hr }}</span></div></sc-for>
+        </div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;height:38px;border-bottom:1px solid var(--border)">
+            <sc-for list="{{ gridDays }}" as="d" hint-placeholder-count="7"><div style="{{ d.headStyle }}"><span style="font:600 12px Geist;color:{{ d.fg }}">{{ d.label }}</span><span style="font:500 12px 'Geist Mono',monospace;color:{{ d.numFg }}">{{ d.num }}</span></div></sc-for>
+          </div>
+          <div style="{{ gridBgStyle }}">
+            <sc-for list="{{ gridDays }}" as="d" hint-placeholder-count="7">
+              <div style="{{ d.colStyle }}">
+                <sc-for list="{{ d.events }}" as="ev" hint-placeholder-count="3">
+                  <div style="{{ ev.boxStyle }}">
+                    <div style="{{ ev.titleStyle }}">{{ ev.title }}</div>
+                    <sc-if value="{{ ev.showMeta }}" hint-placeholder-val="{{ false }}"><div style="{{ ev.metaStyle }}">{{ ev.meta }}</div></sc-if>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ d.isToday }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:0;right:0;top:184px;border-top:1.5px solid var(--moss);z-index:4"><div style="position:absolute;left:-2px;top:-4px;width:7px;height:7px;border-radius:50%;background:var(--moss)"></div></div></sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isMonth }}" hint-placeholder-val="{{ false }}">
+      <div style="border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--surface)">
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--border)">
+          <div style="padding:9px 0;text-align:center;font:600 10px 'Geist Mono',monospace;letter-spacing:.1em;color:var(--muted)">LUN</div><div style="padding:9px 0;text-align:center;font:600 10px 'Geist Mono',monospace;letter-spacing:.1em;color:var(--muted)">MAR</div><div style="padding:9px 0;text-align:center;font:600 10px 'Geist Mono',monospace;letter-spacing:.1em;color:var(--muted)">MIÉ</div><div style="padding:9px 0;text-align:center;font:600 10px 'Geist Mono',monospace;letter-spacing:.1em;color:var(--muted)">JUE</div><div style="padding:9px 0;text-align:center;font:600 10px 'Geist Mono',monospace;letter-spacing:.1em;color:var(--muted)">VIE</div><div style="padding:9px 0;text-align:center;font:600 10px 'Geist Mono',monospace;letter-spacing:.1em;color:var(--muted)">SÁB</div><div style="padding:9px 0;text-align:center;font:600 10px 'Geist Mono',monospace;letter-spacing:.1em;color:var(--muted)">DOM</div>
+        </div>
+        <sc-for list="{{ monthWeeks }}" as="wk" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:repeat(7,1fr)">
+            <sc-for list="{{ wk.days }}" as="c" hint-placeholder-count="7">
+              <div style="{{ c.cellStyle }}">
+                <div style="display:flex;align-items:center;margin-bottom:2px">
+                  <sc-if value="{{ c.isToday }}" hint-placeholder-val="{{ false }}"><span style="width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font:600 11px 'Geist Mono',monospace">{{ c.numDisp }}</span></sc-if>
+                  <sc-if value="{{ c.notToday }}" hint-placeholder-val="{{ true }}"><span style="{{ c.numStyle }}">{{ c.numDisp }}</span></sc-if>
+                </div>
+                <sc-for list="{{ c.chips }}" as="ch" hint-placeholder-count="0"><div style="{{ ch.style }}">{{ ch.t }}</div></sc-for>
+                <sc-if value="{{ c.hasMore }}" hint-placeholder-val="{{ false }}"><div style="font:600 9.5px 'Geist Mono',monospace;color:var(--muted);margin-top:1px">{{ c.moreLabel }}</div></sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <div style="display:flex;gap:14px;margin-top:16px">
+      <div onClick="{{ openCmd }}" style="flex:1;min-width:0;display:flex;align-items:center;gap:12px;padding:11px 15px;background:var(--surface);border:1px solid var(--border);border-radius:11px;cursor:text" style-hover="border-color:var(--moss)">
+        <div style="width:30px;height:30px;border-radius:8px;background:var(--tint);color:var(--moss);display:flex;align-items:center;justify-content:center;flex:none"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="4" height="9" rx="2"/><path d="M5 10a5 5 0 0 0 10 0M10 15v2"/></svg></div>
+        <span style="flex:1;font:400 13.5px Geist;color:var(--muted)">Escribí o dictá un evento — "gym mañana 7am", "almuerzo con Ana el jueves al mediodía"…</span>
+        <kbd style="font:600 11px 'Geist Mono',monospace;color:var(--ink2);background:var(--chip);border:1px solid var(--border);border-radius:5px;padding:3px 7px">⌘K</kbd>
+      </div>
+      <div style="flex:none;display:flex;align-items:center;gap:11px;padding:11px 16px;background:var(--surface);border:1px solid var(--border);border-radius:11px">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="10" cy="10" r="6.5"/><path d="M10 6.5V10l2.2 1.3"/></svg>
+        <span style="font:400 13px Geist;color:var(--ink2)">2 huecos libres · Mar y Vie 16:30</span>
+        <button style="padding:6px 12px;background:transparent;color:var(--moss);border:1px solid var(--border);border-radius:8px;font:600 12px Geist;cursor:pointer;white-space:nowrap" style-hover="background:var(--tint)">Asignar tareas</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div onClick="{{ closeCmd }}" style="{{ cmdBackdropStyle }}"></div>
+<div style="{{ cmdPanelStyle }}">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:0 30px 80px -24px rgba(0,0,0,.5);overflow:hidden">
+    <div style="display:flex;align-items:center;gap:13px;padding:16px 18px">
+      <div style="width:22px;height:22px;flex:none;color:var(--moss);display:flex;align-items:center;justify-content:center">
+        <sc-if value="{{ listening }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 100 100" style="animation:zrotate 5.6s cubic-bezier(.7,0,.2,1) infinite"><defs><mask id="zi-listen"><rect x="8" y="8" width="84" height="84" rx="20" fill="#fff"></rect><rect x="35" y="35" width="30" height="30" rx="9" fill="#000"></rect></mask></defs><rect x="8" y="8" width="84" height="84" rx="20" fill="var(--moss)" mask="url(#zi-listen)"></rect></svg></sc-if>
+        <sc-if value="{{ notListening }}" hint-placeholder-val="{{ true }}"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="12.5" rx="1.6"/><path d="M3 8h14M7 3v3M13 3v3"/></svg></sc-if>
+      </div>
+      <input value="{{ cmdText }}" onInput="{{ onCmdInput }}" autofocus placeholder="Escribí o dictá un evento… 'almuerzo con Ana el jueves al mediodía'" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font:400 17px Geist;color:var(--ink)" />
+      <div onClick="{{ toggleMic }}" title="Dictar" style="{{ micStyle }}"><svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="4" height="9" rx="2"/><path d="M5 10a5 5 0 0 0 10 0M10 15v2"/></svg></div>
+    </div>
+
+    <sc-if value="{{ listening }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:11px;padding:13px 18px;border-top:1px solid var(--border-soft);background:var(--tint)">
+        <div style="display:flex;align-items:flex-end;gap:3px;height:18px">
+          <span style="width:3px;height:8px;border-radius:2px;background:var(--moss);animation:zbar 0.9s ease-in-out infinite"></span>
+          <span style="width:3px;height:16px;border-radius:2px;background:var(--moss);animation:zbar 0.9s ease-in-out infinite 0.15s"></span>
+          <span style="width:3px;height:11px;border-radius:2px;background:var(--moss);animation:zbar 0.9s ease-in-out infinite 0.3s"></span>
+          <span style="width:3px;height:18px;border-radius:2px;background:var(--moss);animation:zbar 0.9s ease-in-out infinite 0.45s"></span>
+          <span style="width:3px;height:9px;border-radius:2px;background:var(--moss);animation:zbar 0.9s ease-in-out infinite 0.6s"></span>
+        </div>
+        <span style="font:500 13.5px Geist;color:var(--ink)">Escuchando… decime el evento con naturalidad</span>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasCev }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top:1px solid var(--border-soft);padding:14px 18px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <svg width="14" height="14" viewBox="0 0 100 100"><defs><mask id="zi-cmd"><rect x="8" y="8" width="84" height="84" rx="20" fill="#fff"></rect><rect x="35" y="35" width="30" height="30" rx="9" fill="#000"></rect></mask></defs><rect x="8" y="8" width="84" height="84" rx="20" fill="var(--moss)" mask="url(#zi-cmd)"></rect></svg>
+          <span style="font:600 10.5px 'Geist Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--moss)">Zelvem entendió</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 15px;background:var(--paper);border:1px solid var(--border);border-radius:12px">
+          <div style="width:40px;height:40px;flex:none;border-radius:10px;background:var(--tint);color:var(--moss);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="12.5" rx="1.6"/><path d="M3 8h14M7 3v3M13 3v3"/></svg></div>
+          <div style="flex:1;min-width:0">
+            <div style="font:600 10px 'Geist Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Evento nuevo</div>
+            <div style="font:600 15px Geist;color:var(--ink);margin-bottom:8px;text-wrap:pretty">{{ cevTitle }}</div>
+            <div style="display:flex;gap:7px;flex-wrap:wrap">
+              <sc-for list="{{ cevChips }}" as="ch" hint-placeholder-count="3"><span style="display:inline-flex;align-items:center;padding:3px 9px;background:var(--chip);border:1px solid var(--border);border-radius:7px;font:500 11.5px 'Geist Mono',monospace;color:var(--ink2)">{{ ch.t }}</span></sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:13px 18px;border-top:1px solid var(--border-soft)">
+        <span style="flex:1;font:400 12.5px Geist;color:var(--muted)">Se agenda en tu calendario</span>
+        <button onClick="{{ openNewFromCmd }}" style="padding:9px 15px;background:transparent;color:var(--ink2);border:1px solid var(--border);border-radius:9px;font:600 12.5px Geist;cursor:pointer" style-hover="background:var(--tint);color:var(--ink)">Ajustar</button>
+        <button onClick="{{ closeCmd }}" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;background:var(--moss);color:var(--on-moss);border:none;border-radius:9px;font:600 12.5px Geist;cursor:pointer" style-hover="background:var(--moss-hover)">Crear evento<kbd style="font:600 10px 'Geist Mono',monospace;background:rgba(255,255,255,.18);border-radius:4px;padding:1px 5px">↵</kbd></button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ noCev }}" hint-placeholder-val="{{ true }}">
+      <div style="border-top:1px solid var(--border-soft);padding:12px 10px 8px">
+        <div style="font:600 10px 'Geist Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:4px 8px 8px">Probá con algo así</div>
+        <sc-for list="{{ examplesC }}" as="ex" hint-placeholder-count="4">
+          <div onClick="{{ ex.pick }}" style="display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:9px;cursor:pointer" style-hover="background:var(--tint)">
+            <div style="width:26px;height:26px;flex:none;border-radius:7px;background:var(--chip);color:var(--muted);display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="12.5" rx="1.6"/><path d="M3 8h14M7 3v3M13 3v3"/></svg></div>
+            <span style="flex:1;font:400 13.5px Geist;color:var(--ink)">{{ ex.text }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <div style="display:flex;align-items:center;gap:14px;padding:10px 18px;border-top:1px solid var(--border-soft);background:var(--paper)">
+      <span style="flex:1"></span>
+      <span style="font:500 10.5px 'Geist Mono',monospace;color:var(--faint)">↵ crear · esc cerrar</span>
+    </div>
+  </div>
+</div>
+
+<div onClick="{{ closeNew }}" style="{{ newBackdropStyle }}"></div>
+<div style="{{ newPanelStyle }}">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:0 30px 80px -24px rgba(0,0,0,.5);overflow:hidden">
+    <div style="display:flex;align-items:center;padding:15px 18px;border-bottom:1px solid var(--border-soft)">
+      <div style="font:600 14.5px Geist;color:var(--ink)">Nuevo evento</div>
+      <div style="flex:1"></div>
+      <div onClick="{{ closeNew }}" title="Cerrar" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:var(--muted);cursor:pointer" style-hover="background:var(--tint);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg></div>
+    </div>
+
+    <div style="padding:18px">
+      <input value="{{ evTitle }}" onInput="{{ onEvTitle }}" autofocus placeholder="Añadí un título" style="width:100%;box-sizing:border-box;border:none;outline:none;background:transparent;font:600 20px Geist;color:var(--ink);margin-bottom:16px" />
+
+      <div style="display:flex;gap:8px;margin-bottom:18px">
+        <sc-for list="{{ calPills }}" as="c" hint-placeholder-count="3"><div onClick="{{ c.pick }}" style="{{ c.pillStyle }}"><span style="{{ c.dotStyle }}"></span>{{ c.label }}</div></sc-for>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--paper);border:1px solid var(--border);border-radius:11px;margin-bottom:10px">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="3" y="4.5" width="14" height="12.5" rx="1.6"/><path d="M3 8h14M7 3v3M13 3v3"/></svg>
+        <span style="flex:1;font:500 13.5px Geist;color:var(--ink)">{{ evDate }}</span>
+        <div style="display:flex;align-items:center;gap:9px">
+          <span style="font:500 12px Geist;color:var(--ink2)">Todo el día</span>
+          <div onClick="{{ toggleAllDay }}" style="{{ allDayTrackStyle }}"><span style="{{ allDayKnobStyle }}"></span></div>
+        </div>
+      </div>
+
+      <sc-if value="{{ notAllDay }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--paper);border:1px solid var(--border);border-radius:11px;margin-bottom:14px">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="10" cy="10" r="6.5"/><path d="M10 6.5V10l2.2 1.3"/></svg>
+          <span style="font:600 13.5px 'Geist Mono',monospace;color:var(--ink)">{{ evStart }}</span>
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="var(--muted)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h11M11 6l4 4-4 4"/></svg>
+          <span style="font:600 13.5px 'Geist Mono',monospace;color:var(--ink)">{{ evEnd }}</span>
+        </div>
+      </sc-if>
+
+      <div style="display:flex;align-items:center;gap:10px;padding:11px 13px;background:var(--tint2);border:1px solid var(--aBord);border-radius:11px;margin-bottom:16px">
+        <svg width="15" height="15" viewBox="0 0 100 100" style="flex:none"><defs><mask id="zi-hueco"><rect x="8" y="8" width="84" height="84" rx="20" fill="#fff"></rect><rect x="35" y="35" width="30" height="30" rx="9" fill="#000"></rect></mask></defs><rect x="8" y="8" width="84" height="84" rx="20" fill="var(--moss)" mask="url(#zi-hueco)"></rect></svg>
+        <span style="flex:1;font:400 12.5px Geist;color:var(--ink2)">Zelvem ve 2 huecos que te cuidan el foco</span>
+        <div style="display:flex;gap:6px">
+          <sc-for list="{{ freeSlots }}" as="s" hint-placeholder-count="2"><div onClick="{{ s.pick }}" style="padding:5px 11px;background:var(--surface);border:1px solid var(--border);border-radius:7px;font:600 11.5px Geist;color:var(--moss);cursor:pointer;white-space:nowrap" style-hover="background:var(--tint)">{{ s.label }}</div></sc-for>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid var(--border);border-radius:11px;margin-bottom:10px">
+        <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M10 17s-6-4.5-6-9a6 6 0 0 1 12 0c0 4.5-6 9-6 9z"/><circle cx="10" cy="8" r="2"/></svg>
+        <input placeholder="Ubicación o link de videollamada" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font:400 13.5px Geist;color:var(--ink)" />
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid var(--border);border-radius:11px;margin-bottom:10px">
+        <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="7" cy="8" r="2.4"/><path d="M2.5 16a4.5 4.5 0 0 1 9 0"/><path d="M13 6.2a2.4 2.4 0 0 1 0 4.6M14.5 16a4.5 4.5 0 0 0-2.2-3.9"/></svg>
+        <input placeholder="Invitar personas" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font:400 13.5px Geist;color:var(--ink)" />
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:11px 14px;border:1px solid var(--border);border-radius:11px">
+        <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><path d="M4 5h12M4 9h12M4 13h8"/></svg>
+        <textarea placeholder="Notas…" style="flex:1;min-width:0;box-sizing:border-box;border:none;outline:none;background:transparent;resize:vertical;min-height:44px;font:400 13.5px/1.5 Geist;color:var(--ink)"></textarea>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-top:1px solid var(--border-soft);background:var(--paper)">
+      <span style="flex:1"></span>
+      <button onClick="{{ closeNew }}" style="padding:10px 16px;background:transparent;color:var(--ink2);border:1px solid var(--border);border-radius:9px;font:600 13px Geist;cursor:pointer" style-hover="background:var(--tint);color:var(--ink)">Cancelar</button>
+      <button onClick="{{ closeNew }}" style="padding:10px 18px;background:var(--moss);color:var(--on-moss);border:none;border-radius:9px;font:600 13px Geist;cursor:pointer" style-hover="background:var(--moss-hover)">Crear evento</button>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light' | 'dark'&quot;,&quot;section&quot;:&quot;Apariencia&quot;},&quot;view&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;3d&quot;,&quot;week&quot;,&quot;month&quot;],&quot;default&quot;:&quot;week&quot;,&quot;tsType&quot;:&quot;'3d' | 'week' | 'month'&quot;,&quot;section&quot;:&quot;Vista&quot;}}">
+class Component extends DCLogic {
+  state = { theme: null, view: 'week', monthOpen: false, cmdOpen: false, cmdText: '', listening: false, newOpen: false, evTitle: '', evCal: 'work', evAllDay: false, evDate: 'Martes 30 de junio', evStart: '15:00', evEnd: '16:00' };
+  applyTheme(t) {
+    var DARK = {
+      '--paper': '#141110', '--surface': '#1E1A15', '--border': '#37312A', '--border-soft': '#241F1A',
+      '--ink': '#F2F0E9', '--ink2': '#ABA08E', '--muted': '#7C7567',
+      '--moss': '#6E9A73', '--moss-hover': '#7EAA83', '--on-moss': '#11140E',
+      '--chip': '#262019', '--dot': '#463F35', '--avatar': '#262019', '--tint': 'rgba(110,154,115,.16)',
+      '--surf2': '#2A241D', '--grid': '#241F1A', '--faint': '#5F594C', '--evwork-bd': '#3A342C', '--evwork-bg': '#25211B',
+      '--pers': '#262019', '--pers-bd': '#37312A', '--tint2': 'rgba(110,154,115,.10)', '--aBord': 'rgba(110,154,115,.32)',
+      '--free-bd': '#4A4438', '--cat-meet': '#8E897A', '--cat-pers': '#463F35'
+    };
+    try {
+      var el = document.documentElement;
+      el.setAttribute('data-theme', t);
+      if (t === 'dark') { for (var k in DARK) el.style.setProperty(k, DARK[k]); }
+      else { for (var k2 in DARK) el.style.removeProperty(k2); }
+    } catch (e) {}
+  }
+  componentDidMount() {
+    var t = null;
+    try { t = localStorage.getItem('zelvem-theme'); } catch (e) {}
+    if (t !== 'light' && t !== 'dark') t = this.props.theme || 'light';
+    var v = this.props.view;
+    this.applyTheme(t);
+    this.setState({ theme: t, view: (v === '3d' || v === 'week' || v === 'month') ? v : 'week' });
+    var self = this;
+    this._onKey = function (e) {
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) { e.preventDefault(); self.setState(function (s) { return { cmdOpen: !s.cmdOpen }; }); }
+      else if (e.key === 'Escape' && self.state.cmdOpen) { self.setState({ cmdOpen: false }); }
+    };
+    document.addEventListener('keydown', this._onKey);
+  }
+  componentWillUnmount() {
+    if (this._onKey) document.removeEventListener('keydown', this._onKey);
+    if (this._micT) clearTimeout(this._micT);
+  }
+  componentDidUpdate() {
+    if (this.state.theme) this.applyTheme(this.state.theme);
+  }
+  renderVals() {
+    var self = this;
+    var theme = this.state.theme || this.props.theme || 'light';
+    var view = this.state.view || 'week';
+    var toggle = function () {
+      var next = theme === 'dark' ? 'light' : 'dark';
+      try { localStorage.setItem('zelvem-theme', next); } catch (e) {}
+      self.applyTheme(next);
+      self.setState({ theme: next });
+    };
+
+    var HP = 54, START = 7;
+    function fmt(x) { var h = Math.floor(x + 1e-6); var m = Math.round((x - h) * 60); return h + ':' + (m < 10 ? '0' + m : m); }
+    var raw = [
+      [0, 'work', 9, 9.5, 'Standup'],
+      [0, 'focus', 10, 12, 'Foco · módulo auth'],
+      [0, 'personal', 13, 14, 'Almuerzo'],
+      [0, 'work', 15, 16, 'Review arquitectura'],
+      [1, 'personal', 7, 8, 'Gym'],
+      [1, 'work', 9, 9.5, 'Standup'],
+      [1, 'focus', 10, 11.5, 'Foco · refactor auth'],
+      [1, 'work', 11.5, 12, '1:1 con Lucía'],
+      [1, 'personal', 13, 14, 'Almuerzo'],
+      [1, 'work', 15, 16, 'Review de diseño'],
+      [1, 'free', 16.5, 17.5, 'Cerrar PR #482'],
+      [2, 'work', 9, 9.5, 'Standup'],
+      [2, 'focus', 10, 12.5, 'Foco profundo'],
+      [2, 'personal', 13, 14, 'Almuerzo'],
+      [2, 'work', 14, 15, 'Sync de producto'],
+      [3, 'work', 9, 9.5, 'Standup'],
+      [3, 'work', 9.5, 10.5, 'Entrevista · panel'],
+      [3, 'work', 10.5, 11.5, 'Roadmap Q3'],
+      [3, 'work', 11.5, 12.5, 'Vendor demo'],
+      [3, 'work', 14, 15, '1:1 manager'],
+      [3, 'work', 15, 16.5, 'Incident review'],
+      [4, 'work', 9, 9.5, 'Standup'],
+      [4, 'focus', 10, 12, 'Foco'],
+      [4, 'personal', 13, 14, 'Almuerzo'],
+      [4, 'work', 15, 16, 'Demo a stakeholders'],
+      [4, 'free', 16.5, 18, 'Escribir RFC'],
+      [5, 'personal', 10, 11, 'Gym']
+    ];
+    function boxFor(type, top, h) {
+      var base = 'position:absolute;left:3px;right:3px;top:' + top + 'px;height:' + (h - 3) + 'px;border-radius:7px;padding:5px 8px;box-sizing:border-box;overflow:hidden;';
+      if (type === 'work') return base + 'background:var(--evwork-bg);border:1px solid var(--evwork-bd);box-shadow:0 1px 2px rgba(0,0,0,.04);';
+      if (type === 'personal') return base + 'background:var(--pers);border:1px solid var(--pers-bd);';
+      if (type === 'focus') return base + 'background:var(--tint2);border:1px solid var(--aBord);border-left:3px solid var(--moss);';
+      return base + 'background:transparent;border:1px dashed var(--free-bd);';
+    }
+    function titleStyle(type) {
+      var c = type === 'personal' ? 'var(--ink2)' : (type === 'free' ? 'var(--muted)' : 'var(--ink)');
+      return 'font:600 11.5px Geist;color:' + c + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+    }
+    var labels = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+    var nums = ['29', '30', '1', '2', '3', '4', '5'];
+    var todayIdx = 1;
+    var days = [];
+    for (var i = 0; i < 7; i++) {
+      var isToday = i === todayIdx;
+      days.push({
+        label: labels[i], num: nums[i], isToday: isToday,
+        fg: isToday ? 'var(--ink)' : 'var(--ink2)',
+        numFg: isToday ? 'var(--ink)' : 'var(--muted)',
+        headStyle: 'flex:1;display:flex;align-items:center;justify-content:center;gap:6px;border-left:1px solid var(--border-soft);' + (isToday ? 'background:var(--tint2);' : ''),
+        colStyle: 'flex:1;min-width:0;position:relative;border-left:1px solid var(--border-soft);' + (isToday ? 'background:var(--tint2);' : ''),
+        events: []
+      });
+    }
+    raw.forEach(function (r) {
+      var d = r[0], type = r[1], s = r[2], e = r[3], title = r[4];
+      var top = Math.round((s - START) * HP);
+      var h = Math.round((e - s) * HP);
+      var isFree = type === 'free';
+      var tag = type === 'focus' ? 'FOCO' : (type === 'personal' ? 'PERSONAL' : (isFree ? 'HUECO SUGERIDO' : ''));
+      var meta, metaStyle, showMeta;
+      if (isFree) {
+        meta = tag;
+        metaStyle = 'font:600 9px \'Geist Mono\',monospace;letter-spacing:.06em;color:var(--faint);margin-top:2px;';
+        showMeta = true;
+      } else if (h >= 48 && tag) {
+        meta = tag;
+        metaStyle = 'font:600 9px \'Geist Mono\',monospace;letter-spacing:.08em;color:' + (type === 'focus' ? 'var(--moss)' : 'var(--muted)') + ';margin-top:2px;';
+        showMeta = true;
+      } else if (h >= 48) {
+        meta = fmt(s) + '–' + fmt(e);
+        metaStyle = 'font:500 9.5px \'Geist Mono\',monospace;color:var(--muted);margin-top:2px;';
+        showMeta = true;
+      } else {
+        meta = ''; metaStyle = ''; showMeta = false;
+      }
+      days[d].events.push({
+        title: (isFree ? '+ ' : '') + title,
+        boxStyle: boxFor(type, top, h),
+        titleStyle: titleStyle(type),
+        meta: meta, metaStyle: metaStyle, showMeta: showMeta
+      });
+    });
+    var hours = [];
+    for (var hh = 7; hh <= 19; hh++) hours.push(hh < 10 ? '0' + hh : '' + hh);
+    var gridBgStyle = 'display:flex;position:relative;height:702px;background-image:repeating-linear-gradient(to bottom,var(--grid) 0,var(--grid) 1px,transparent 1px,transparent 54px)';
+
+    var is3d = view === '3d', isWeek = view === 'week', isMonth = view === 'month';
+    var gridDays = is3d ? [days[1], days[2], days[3]] : days;
+
+    // ---- month ----
+    function chipStyle(type) {
+      var b = 'font:500 10px/1.5 Geist;border-radius:4px;padding:1px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+      if (type === 'work') return b + 'color:var(--ink);background:var(--chip);border:1px solid var(--evwork-bd);';
+      if (type === 'focus') return b + 'color:var(--ink);background:var(--tint2);border-left:2px solid var(--moss);';
+      if (type === 'personal') return b + 'color:var(--ink2);background:var(--pers);border:1px solid var(--pers-bd);';
+      return b + 'color:var(--muted);background:transparent;border:1px dashed var(--free-bd);';
+    }
+    var mev = {
+      1: [['Standup', 'work'], ['Planning', 'work']],
+      2: [['Standup', 'work'], ['Foco', 'focus'], ['1:1', 'work']],
+      3: [['Standup', 'work'], ['Deploy', 'work']],
+      4: [['Foco', 'focus'], ['Demo', 'work']],
+      5: [['Gym', 'personal']],
+      8: [['Standup', 'work'], ['Foco', 'focus']],
+      9: [['Standup', 'work'], ['Sync producto', 'work'], ['Review', 'work']],
+      10: [['Standup', 'work'], ['Foco', 'focus']],
+      11: [['Standup', 'work'], ['Entrevista', 'work'], ['Roadmap', 'work'], ['Retro', 'work']],
+      12: [['Foco', 'focus'], ['Almuerzo eq.', 'personal']],
+      15: [['Standup', 'work'], ['Planning', 'work']],
+      16: [['Standup', 'work'], ['Foco', 'focus']],
+      17: [['Standup', 'work'], ['Vendor demo', 'work'], ['1:1', 'work']],
+      18: [['Foco', 'focus'], ['Demo', 'work']],
+      19: [['Gym', 'personal']],
+      22: [['Standup', 'work'], ['Foco', 'focus']],
+      23: [['Standup', 'work'], ['Sync', 'work']],
+      24: [['Standup', 'work'], ['Review', 'work'], ['1:1', 'work']],
+      25: [['Foco', 'focus'], ['Roadmap Q3', 'work']],
+      26: [['Gym', 'personal']],
+      29: [['Standup', 'work'], ['Foco', 'focus'], ['Almuerzo', 'personal'], ['Review', 'work']],
+      30: [['Standup', 'work'], ['Foco · refactor', 'focus'], ['1:1 Lucía', 'work'], ['Almuerzo', 'personal'], ['Review', 'work'], ['Cerrar PR', 'free']]
+    };
+    var julEv = {
+      1: [['Foco profundo', 'focus'], ['Sync', 'work']],
+      2: [['Entrevista', 'work'], ['Roadmap Q3', 'work'], ['Vendor demo', 'work'], ['1:1', 'work'], ['Incident', 'work']],
+      3: [['Foco', 'focus'], ['Demo', 'work']],
+      4: [],
+      5: [['Gym', 'personal']]
+    };
+    var weeksRaw = [
+      [[1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0]],
+      [[8, 0], [9, 0], [10, 0], [11, 0], [12, 0], [13, 0], [14, 0]],
+      [[15, 0], [16, 0], [17, 0], [18, 0], [19, 0], [20, 0], [21, 0]],
+      [[22, 0], [23, 0], [24, 0], [25, 0], [26, 0], [27, 0], [28, 0]],
+      [[29, 0], [30, 0], [1, 1], [2, 1], [3, 1], [4, 1], [5, 1]]
+    ];
+    function buildCell(num, offset) {
+      var inMonth = offset === 0;
+      var isTod = inMonth && num === 30;
+      var evs = inMonth ? (mev[num] || []) : (julEv[num] || []);
+      var chips = evs.slice(0, 3).map(function (e) { return { t: e[0], style: chipStyle(e[1]) }; });
+      var more = evs.length > 3 ? evs.length - 3 : 0;
+      return {
+        numDisp: '' + num, isToday: isTod, notToday: !isTod,
+        numStyle: 'font:600 11.5px \'Geist Mono\',monospace;color:' + (inMonth ? 'var(--ink2)' : 'var(--faint)'),
+        cellStyle: 'position:relative;min-height:128px;padding:7px 8px;display:flex;flex-direction:column;gap:3px;border-left:1px solid var(--border-soft);border-top:1px solid var(--border-soft);' + (isTod ? 'background:var(--tint2);' : ''),
+        chips: chips, hasMore: more > 0, moreLabel: '+' + more + ' más'
+      };
+    }
+    var monthWeeks = weeksRaw.map(function (w) { return { days: w.map(function (p) { return buildCell(p[0], p[1]); }) }; });
+    function buildMini(num, offset) {
+      var inMonth = offset === 0;
+      var isTod = inMonth && num === 30;
+      return {
+        numDisp: '' + num, isToday: isTod, notToday: !isTod,
+        wrapStyle: 'height:30px;display:flex;align-items:center;justify-content:center;',
+        numColorStyle: 'font:500 11.5px \'Geist Mono\',monospace;color:' + (inMonth ? 'var(--ink2)' : 'var(--faint)')
+      };
+    }
+    var miniWeeks = weeksRaw.map(function (w) { return { days: w.map(function (p) { return buildMini(p[0], p[1]); }) }; });
+
+    var segBase = 'padding:7px 13px;font:500 12.5px Geist;cursor:pointer;';
+    var actCss = 'font-weight:600;color:var(--ink);background:var(--surf2);';
+    var inactCss = 'color:var(--muted);';
+
+    var rangeLabel = isMonth ? 'Junio 2026' : (is3d ? '30 jun – 2 jul' : '29 jun – 5 jul');
+    var subLabel = isMonth ? 'Hoy, martes 30 de junio' : 'Martes 30, hoy · 4 reuniones';
+
+    var openCmd = function () { self.setState({ cmdOpen: true }); };
+    var closeCmd = function () { self.setState({ cmdOpen: false, listening: false }); };
+    var onCmdInput = function (e) { self.setState({ cmdText: e.target.value }); };
+    var setExample = function (txt) { return function () { self.setState({ cmdText: txt, listening: false }); }; };
+    var toggleMic = function () {
+      if (self.state.listening) { self.setState({ listening: false }); if (self._micT) clearTimeout(self._micT); return; }
+      self.setState({ listening: true });
+      self._micT = setTimeout(function () { self.setState({ listening: false, cmdText: 'Almuerzo con Ana el jueves al mediodía' }); }, 1700);
+    };
+    function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+    function parseEvent(raw) {
+      var t = (raw || '').trim(); if (!t) return null;
+      var low = t.toLowerCase();
+      var dayM = low.match(/\b(hoy|mañana|manana|pasado mañana|lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo|finde)\b/);
+      var timeM = low.match(/\b(\d{1,2}([:.]\d{2})?\s?(am|pm|hs|h))\b/) || low.match(/\b(\d{1,2}:\d{2})\b/) || (/mediod[ií]a/.test(low) ? ['mediodía'] : null);
+      var day = dayM ? cap(dayM[0]) : 'Hoy';
+      var time = timeM ? String(timeM[0]).replace(/mediod[ií]a/, 'mediodía') : '—';
+      var isPersonal = /(gym|almuerzo|cena|caf[eé]|m[eé]dico|dentista|cumple|personal|familia|entrena)/.test(low);
+      return { title: cap(t), chips: [day, time, isPersonal ? 'Personal' : 'Trabajo'] };
+    }
+    var cev = parseEvent(this.state.cmdText);
+    var examplesC = [
+      { text: 'Gym mañana 7am' }, { text: 'Café con Marco el viernes 16:30' },
+      { text: 'Bloque de foco el martes 10:00' }, { text: 'Demo a stakeholders el jueves 15h' }
+    ].map(function (e) { return { text: e.text, pick: setExample(e.text) }; });
+
+    var openNew = function () { self.setState({ newOpen: true }); };
+    var closeNew = function () { self.setState({ newOpen: false }); };
+    var openNewFromCmd = function () { self.setState({ newOpen: true, cmdOpen: false, listening: false, evTitle: (self.state.cmdText || '') }); };
+    var onEvTitle = function (e) { self.setState({ evTitle: e.target.value }); };
+    var evCal = this.state.evCal || 'work';
+    var mkCal = function (k) { return function () { self.setState({ evCal: k }); }; };
+    var calPills = [['work', 'Trabajo', 'var(--cat-meet)'], ['focus', 'Foco', 'var(--moss)'], ['personal', 'Personal', 'var(--cat-pers)']].map(function (c) {
+      var on = evCal === c[0];
+      return { label: c[1], dotStyle: 'width:9px;height:9px;border-radius:3px;flex:none;background:' + c[2], pick: mkCal(c[0]),
+        pillStyle: 'display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:9px;cursor:pointer;font:600 12.5px Geist;border:1px solid ' + (on ? 'var(--moss)' : 'var(--border)') + ';' + (on ? 'background:var(--tint);color:var(--ink);' : 'background:transparent;color:var(--ink2);') };
+    });
+    var evAllDay = !!this.state.evAllDay;
+    var toggleAllDay = function () { self.setState(function (s) { return { evAllDay: !s.evAllDay }; }); };
+    var mkSlot = function (date, s, e) { return function () { self.setState({ evDate: date, evStart: s, evEnd: e, evAllDay: false }); }; };
+    var freeSlots = [
+      { label: 'Hoy 16:30', pick: mkSlot('Martes 30 de junio', '16:30', '17:00') },
+      { label: 'Mañana 09:00', pick: mkSlot('Miércoles 1 de julio', '09:00', '10:00') }
+    ];
+
+    return {
+      isDark: theme === 'dark', isLight: theme !== 'dark', toggle: toggle,
+      is3d: is3d, isWeek: isWeek, isMonth: isMonth, isTimeGrid: !isMonth,
+      set3d: function () { self.setState({ view: '3d' }); },
+      setWeek: function () { self.setState({ view: 'week' }); },
+      setMonth: function () { self.setState({ view: 'month' }); },
+      seg3dStyle: segBase + (is3d ? actCss : inactCss),
+      segWeekStyle: segBase + 'border-left:1px solid var(--border);border-right:1px solid var(--border);' + (isWeek ? actCss : inactCss),
+      segMonthStyle: segBase + (isMonth ? actCss : inactCss),
+      rangeLabel: rangeLabel, subLabel: subLabel,
+      monthOpen: this.state.monthOpen,
+      toggleMonth: function () { self.setState(function (s) { return { monthOpen: !s.monthOpen }; }); },
+      closeMonth: function () { self.setState({ monthOpen: false }); },
+      gridDays: gridDays, hours: hours, gridBgStyle: gridBgStyle,
+      monthWeeks: monthWeeks, miniWeeks: miniWeeks,
+      openCmd: openCmd, closeCmd: closeCmd, onCmdInput: onCmdInput, toggleMic: toggleMic,
+      cmdOpen: this.state.cmdOpen, cmdText: this.state.cmdText, listening: this.state.listening, notListening: !this.state.listening,
+      micStyle: 'width:34px;height:34px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:9px;cursor:pointer;' + (this.state.listening ? 'background:var(--moss);color:var(--on-moss);' : 'background:var(--chip);color:var(--muted);'),
+      cmdBackdropStyle: 'position:fixed;inset:0;z-index:80;background:rgba(20,17,16,.38);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);transition:opacity .18s ease;' + (this.state.cmdOpen ? 'opacity:1;pointer-events:auto;' : 'opacity:0;pointer-events:none;'),
+      cmdPanelStyle: 'position:fixed;left:50%;top:13vh;z-index:81;width:min(660px,calc(100% - 40px));transform:translateX(-50%) translateY(' + (this.state.cmdOpen ? '0' : '-8px') + ');opacity:' + (this.state.cmdOpen ? '1' : '0') + ';pointer-events:' + (this.state.cmdOpen ? 'auto' : 'none') + ';transition:opacity .18s ease, transform .18s ease;',
+      hasCev: !!cev, noCev: !cev,
+      cevTitle: cev ? cev.title : '', cevChips: (cev ? cev.chips : []).map(function (c) { return { t: c }; }),
+      examplesC: examplesC,
+      openNew: openNew, closeNew: closeNew, openNewFromCmd: openNewFromCmd, onEvTitle: onEvTitle,
+      evTitle: this.state.evTitle, calPills: calPills,
+      evAllDay: evAllDay, notAllDay: !evAllDay, toggleAllDay: toggleAllDay,
+      evDate: this.state.evDate, evStart: this.state.evStart, evEnd: this.state.evEnd, freeSlots: freeSlots,
+      allDayTrackStyle: 'width:38px;height:22px;border-radius:99px;flex:none;cursor:pointer;transition:background .16s ease;position:relative;background:' + (evAllDay ? 'var(--moss)' : 'var(--dot)'),
+      allDayKnobStyle: 'position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .16s ease;transform:translateX(' + (evAllDay ? '16px' : '0') + ')',
+      newBackdropStyle: 'position:fixed;inset:0;z-index:82;background:rgba(20,17,16,.38);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);transition:opacity .18s ease;' + (this.state.newOpen ? 'opacity:1;pointer-events:auto;' : 'opacity:0;pointer-events:none;'),
+      newPanelStyle: 'position:fixed;left:50%;top:10vh;z-index:83;width:min(560px,calc(100% - 40px));transform:translateX(-50%) translateY(' + (this.state.newOpen ? '0' : '-8px') + ');opacity:' + (this.state.newOpen ? '1' : '0') + ';pointer-events:' + (this.state.newOpen ? 'auto' : 'none') + ';transition:opacity .18s ease, transform .18s ease;'
+    };
+  }
+}
+</script>
+</body>
+</html>

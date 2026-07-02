@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F0E9; --surface:#FBFAF6; --border:#DAD7CB; --border-soft:#E4E1D6;
+    --ink:#14171A; --ink2:#5C584E; --muted:#8A8579;
+    --moss:#3F5D42; --moss-hover:#344C37; --on-moss:#F2F0E9;
+    --chip:#EFECE3; --dot:#C9C5B7; --avatar:#E7E3D7; --tint:rgba(63,93,66,.12);
+    --tint2:rgba(63,93,66,.07); --aBord:rgba(63,93,66,.25); --row-hover:#F1EEE6;
+  }
+  html,body{margin:0;background:var(--paper);font-family:Geist,system-ui,sans-serif;color:var(--ink)}
+  *{box-sizing:border-box}
+  button{font-family:inherit}
+</style>
+</helmet>
+<div key="{{ themeKey }}" style="display:flex;min-height:100vh;background:var(--paper);color:var(--ink)">
+  <aside style="width:66px;flex:none;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:18px 0;gap:3px;position:sticky;top:0;height:100vh">
+    <div style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:12px"><svg width="30" height="30" viewBox="0 0 100 100"><defs><mask id="zrail"><rect x="8" y="8" width="84" height="84" rx="20" fill="#fff"></rect><rect x="35" y="35" width="30" height="30" rx="9" fill="#000"></rect></mask></defs><rect x="8" y="8" width="84" height="84" rx="20" fill="var(--moss)" mask="url(#zrail)"></rect></svg></div>
+    <a href="Zelvem Home.dc.html" title="Inicio" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer;text-decoration:none" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 10 4l7 5.5V16a1 1 0 0 1-1 1h-3v-5H7v5H4a1 1 0 0 1-1-1z"></path></svg></a>
+    <a href="Zelvem Email.dc.html" title="Email" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer;text-decoration:none" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="14" height="11" rx="1.6"></rect><path d="m3.6 6.2 6.4 4.6 6.4-4.6"></path></svg></a>
+    <a href="Zelvem Calendar.dc.html" title="Calendario" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer;text-decoration:none" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="12.5" rx="1.6"></rect><path d="M3 8h14M7 3v3M13 3v3"></path></svg></a>
+    <div title="Finanzas" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14l4-4 3 2 6-6"></path><path d="M16 6h-3M16 6v3"></path></svg></div>
+    <div title="Tareas" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h8M8 10h8M8 14h5"></path><path d="m3 6 1.2 1.2L6 5.4"></path><path d="m3 13.6 1.2 1.2L6 13"></path></svg></div>
+    <div title="Blog" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16.2 4.8 13 13 4.8a1.4 1.4 0 0 1 2 2L6.8 15 4 16.2z"></path><path d="M12 6l2 2"></path></svg></div>
+    <div title="Redes" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer" style-hover="color:var(--ink2);background:var(--tint)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="10" r="2.1"></circle><circle cx="15" cy="5" r="2.1"></circle><circle cx="15" cy="15" r="2.1"></circle><path d="m6.9 9 6.2-2.9M6.9 11l6.2 2.9"></path></svg></div>
+    <div onClick="{{ toggle }}" title="Cambiar tema" style="margin-top:auto;margin-bottom:6px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--muted);cursor:pointer" style-hover="color:var(--ink2);background:var(--tint)">
+      <sc-if value="{{ isLight }}" hint-placeholder-val="{{ true }}"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11.4A6.4 6.4 0 0 1 8.6 4 6.4 6.4 0 1 0 16 11.4z"></path></svg></sc-if>
+      <sc-if value="{{ isDark }}" hint-placeholder-val="{{ false }}"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="3.4"></circle><path d="M10 2.2v2M10 15.8v2M2.2 10h2M15.8 10h2M4.4 4.4l1.4 1.4M14.2 14.2l1.4 1.4M15.6 4.4l-1.4 1.4M5.8 14.2l-1.4 1.4"></path></svg></sc-if>
+    </div>
+    <div style="width:34px;height:34px;border-radius:50%;background:var(--avatar);color:var(--ink2);display:flex;align-items:center;justify-content:center;font:600 11.5px 'Geist Mono',monospace;box-shadow:0 0 0 2px var(--moss)">TR</div>
+  </aside>
+
+  <main style="flex:1;min-width:0;display:flex;justify-content:center;padding:44px 0">
+    <div style="width:100%;max-width:900px;padding:0 32px;display:flex;gap:40px">
+
+      <div style="width:196px;flex:none;position:sticky;top:44px;align-self:flex-start">
+        <h1 style="font:600 22px/1.1 Geist;margin:0 0 20px;letter-spacing:-0.02em">Configuración</h1>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5"><div onClick="{{ n.pick }}" style="{{ n.style }}">{{ n.label }}</div></sc-for>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:0">
+
+        <sc-if value="{{ isCuenta }}" hint-placeholder-val="{{ true }}">
+          <div style="font:600 11px 'Geist Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">Cuenta</div>
+          <div style="display:flex;align-items:center;gap:18px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px">
+            <div style="width:64px;height:64px;border-radius:50%;background:var(--avatar);color:var(--ink2);display:flex;align-items:center;justify-content:center;font:600 20px 'Geist Mono',monospace;flex:none">TR</div>
+            <div style="flex:1;min-width:0">
+              <div style="font:600 17px Geist;color:var(--ink)">Tomás Rivas</div>
+              <div style="font:400 13.5px Geist;color:var(--ink2);margin-top:2px">tomas@zelvem.app</div>
+            </div>
+            <div style="display:inline-flex;align-items:center;gap:6px;padding:5px 11px;background:var(--tint);border-radius:20px;font:600 11px 'Geist Mono',monospace;letter-spacing:.04em;color:var(--moss)">ZELVEM PRO</div>
+            <button style="padding:9px 15px;background:transparent;border:1px solid var(--border);border-radius:9px;font:600 12.5px Geist;color:var(--ink2);cursor:pointer" style-hover="background:var(--tint);color:var(--ink)">Cambiar foto</button>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:16px;padding:16px 20px;border-bottom:1px solid var(--border-soft)">
+              <div style="width:150px;flex:none;font:500 13.5px Geist;color:var(--ink2)">Nombre</div>
+              <input value="Tomás Rivas" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font:500 14px Geist;color:var(--ink)" />
+            </div>
+            <div style="display:flex;align-items:center;gap:16px;padding:16px 20px;border-bottom:1px solid var(--border-soft)">
+              <div style="width:150px;flex:none;font:500 13.5px Geist;color:var(--ink2)">Email principal</div>
+              <div style="flex:1;font:500 14px Geist;color:var(--ink)">tomas@zelvem.app</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px;padding:16px 20px">
+              <div style="width:150px;flex:none;font:500 13.5px Geist;color:var(--ink2)">Zona horaria</div>
+              <div style="flex:1;font:500 14px Geist;color:var(--ink)">GMT−3 · Buenos Aires</div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isCuentas }}" hint-placeholder-val="{{ false }}">
+          <div style="font:600 11px 'Geist Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Cuentas conectadas</div>
+          <p style="margin:0 0 16px;font:400 13.5px/1.55 Geist;color:var(--ink2)">Zelvem lee, ordena y responde en todas tus cuentas desde un solo lugar.</p>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:14px">
+            <sc-for list="{{ accounts }}" as="a" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:14px;padding:15px 20px;border-bottom:1px solid var(--border-soft)">
+                <span style="width:10px;height:10px;border-radius:3px;flex:none;background:{{ a.color }}"></span>
+                <div style="flex:1;min-width:0"><div style="font:600 14px Geist;color:var(--ink)">{{ a.label }}</div><div style="font:400 12.5px Geist;color:var(--muted);margin-top:1px">{{ a.detail }}</div></div>
+                <div style="font:500 11.5px 'Geist Mono',monospace;color:var(--moss)">{{ a.status }}</div>
+                <button style="padding:7px 13px;background:transparent;border:1px solid var(--border);border-radius:8px;font:600 12px Geist;color:var(--ink2);cursor:pointer" style-hover="background:var(--tint);color:var(--ink)">Administrar</button>
+              </div>
+            </sc-for>
+          </div>
+          <button style="display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:var(--moss);color:var(--on-moss);border:none;border-radius:9px;font:600 13px Geist;cursor:pointer" style-hover="background:var(--moss-hover)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4v12M4 10h12"></path></svg>Conectar cuenta</button>
+        </sc-if>
+
+        <sc-if value="{{ isZelvem }}" hint-placeholder-val="{{ false }}">
+          <div style="font:600 11px 'Geist Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Zelvem</div>
+          <p style="margin:0 0 16px;font:400 13.5px/1.55 Geist;color:var(--ink2)">Cómo actúa el asistente en tu nombre. Podés ajustar qué tan lejos llega solo.</p>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+
+            <div style="display:flex;align-items:center;gap:16px;padding:17px 20px;border-bottom:1px solid var(--border-soft)">
+              <div style="flex:1;min-width:0"><div style="font:600 14px Geist;color:var(--ink)">Digest matutino</div><div style="font:400 12.5px Geist;color:var(--ink2);margin-top:2px">Un resumen de todo cada mañana a las 07:00.</div></div>
+              <div onClick="{{ digestToggle }}" style="{{ digestTrack }}"><span style="{{ digestKnob }}"></span></div>
+            </div>
+
+            <div style="padding:17px 20px;border-bottom:1px solid var(--border-soft)">
+              <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px"><div style="flex:1"><div style="font:600 14px Geist;color:var(--ink)">Nivel de orden automático</div><div style="font:400 12.5px Geist;color:var(--ink2);margin-top:2px">Cuánto archiva y agrupa sin preguntarte.</div></div></div>
+              <div style="display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden;background:var(--paper)">
+                <sc-for list="{{ orderSeg }}" as="o" hint-placeholder-count="3"><div onClick="{{ o.pick }}" style="{{ o.style }}">{{ o.label }}</div></sc-for>
+              </div>
+            </div>
+
+            <div style="padding:17px 20px;border-bottom:1px solid var(--border-soft)">
+              <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px"><div style="flex:1"><div style="font:600 14px Geist;color:var(--ink)">Tono de borradores</div><div style="font:400 12.5px Geist;color:var(--ink2);margin-top:2px">El punto de partida cuando Zelvem redacta por vos.</div></div></div>
+              <div style="display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden;background:var(--paper)">
+                <sc-for list="{{ toneSeg }}" as="t" hint-placeholder-count="3"><div onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</div></sc-for>
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:16px;padding:17px 20px;border-bottom:1px solid var(--border-soft)">
+              <div style="flex:1;min-width:0"><div style="font:600 14px Geist;color:var(--ink)">Protección de foco</div><div style="font:400 12.5px Geist;color:var(--ink2);margin-top:2px">Bloquea reuniones sobre tus bloques de foco.</div></div>
+              <div onClick="{{ focusToggle }}" style="{{ focusTrack }}"><span style="{{ focusKnob }}"></span></div>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:16px;padding:17px 20px">
+              <div style="flex:1;min-width:0"><div style="font:600 14px Geist;color:var(--ink)">Captura por voz</div><div style="font:400 12.5px Geist;color:var(--ink2);margin-top:2px">Dictar ideas, eventos y tareas desde el ⌘K.</div></div>
+              <div onClick="{{ voiceToggle }}" style="{{ voiceTrack }}"><span style="{{ voiceKnob }}"></span></div>
+            </div>
+
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isFacturacion }}" hint-placeholder-val="{{ false }}">
+          <div style="font:600 11px 'Geist Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">Facturación</div>
+
+          <div style="display:flex;align-items:flex-start;gap:16px;background:var(--tint2);border:1px solid var(--aBord);border-radius:14px;padding:20px;margin-bottom:16px">
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px"><span style="font:600 16px Geist;color:var(--ink)">Zelvem Pro</span><span style="display:inline-flex;align-items:center;padding:3px 9px;background:var(--moss);border-radius:20px;font:600 10px 'Geist Mono',monospace;letter-spacing:.04em;color:var(--on-moss)">ACTIVO</span></div>
+              <div style="font:400 13.5px/1.55 Geist;color:var(--ink2)">Cuentas ilimitadas, orden automático y captura por voz. Se renueva el <strong style="font-weight:600;color:var(--ink)">1 de julio, 2026</strong>.</div>
+            </div>
+            <div style="text-align:right;flex:none">
+              <div style="font:600 24px 'Geist Mono',monospace;letter-spacing:-0.02em;color:var(--ink)">US$ 12</div>
+              <div style="font:400 12px Geist;color:var(--muted);margin-top:2px">por mes</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;margin-bottom:24px">
+            <button style="padding:9px 16px;background:var(--moss);color:var(--on-moss);border:none;border-radius:9px;font:600 12.5px Geist;cursor:pointer" style-hover="background:var(--moss-hover)">Cambiar de plan</button>
+            <button style="padding:9px 16px;background:transparent;border:1px solid var(--border);border-radius:9px;font:600 12.5px Geist;color:var(--ink2);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)">Cancelar suscripción</button>
+          </div>
+
+          <div style="font:600 11px 'Geist Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:11px">Método de pago</div>
+          <div style="display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:16px 18px;margin-bottom:24px">
+            <div style="width:40px;height:28px;flex:none;border-radius:6px;background:var(--chip);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font:700 10px 'Geist Mono',monospace;color:var(--ink2);letter-spacing:.02em">VISA</div>
+            <div style="flex:1;min-width:0"><div style="font:600 13.5px Geist;color:var(--ink)">Visa ···· 4242</div><div style="font:400 12px Geist;color:var(--muted);margin-top:1px">Vence 08/28</div></div>
+            <button style="padding:7px 13px;background:transparent;border:1px solid var(--border);border-radius:8px;font:600 12px Geist;color:var(--ink2);cursor:pointer" style-hover="background:var(--tint);color:var(--ink)">Cambiar</button>
+          </div>
+
+          <div style="font:600 11px 'Geist Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:11px">Historial</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:13px;overflow:hidden">
+            <sc-for list="{{ invoices }}" as="inv" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid var(--border-soft)">
+                <div style="flex:1;min-width:0"><div style="font:600 13.5px Geist;color:var(--ink)">{{ inv.date }}</div></div>
+                <span style="display:inline-flex;align-items:center;gap:6px;font:500 11.5px Geist;color:var(--moss)"><span style="width:6px;height:6px;border-radius:50%;background:var(--moss)"></span>{{ inv.status }}</span>
+                <div style="width:88px;text-align:right;font:600 13px 'Geist Mono',monospace;color:var(--ink)">{{ inv.amount }}</div>
+                <div title="Descargar" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:var(--muted);cursor:pointer" style-hover="background:var(--tint);color:var(--ink)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9M6.5 9 10 12.5 13.5 9M4 15.5h12"></path></svg></div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isApariencia }}" hint-placeholder-val="{{ false }}">
+          <div style="font:600 11px 'Geist Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">Apariencia</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+            <div style="padding:17px 20px">
+              <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px"><div style="flex:1"><div style="font:600 14px Geist;color:var(--ink)">Tema</div><div style="font:400 12.5px Geist;color:var(--ink2);margin-top:2px">Claro para el día, oscuro para la noche.</div></div></div>
+              <div style="display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden;background:var(--paper)">
+                <sc-for list="{{ themeSeg }}" as="th" hint-placeholder-count="2"><div onClick="{{ th.pick }}" style="{{ th.style }}">{{ th.label }}</div></sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isNotif }}" hint-placeholder-val="{{ false }}">
+          <div style="font:600 11px 'Geist Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">Notificaciones</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:16px;padding:17px 20px;border-bottom:1px solid var(--border-soft)">
+              <div style="flex:1;min-width:0"><div style="font:600 14px Geist;color:var(--ink)">Solo lo que necesita tu decisión</div><div style="font:400 12.5px Geist;color:var(--ink2);margin-top:2px">Zelvem te avisa únicamente cuando algo requiere que decidas.</div></div>
+              <div onClick="{{ nDecToggle }}" style="{{ nDecTrack }}"><span style="{{ nDecKnob }}"></span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px;padding:17px 20px;border-bottom:1px solid var(--border-soft)">
+              <div style="flex:1;min-width:0"><div style="font:600 14px Geist;color:var(--ink)">Resumen diario</div><div style="font:400 12.5px Geist;color:var(--ink2);margin-top:2px">Una notificación al final del día con lo hecho.</div></div>
+              <div onClick="{{ nDailyToggle }}" style="{{ nDailyTrack }}"><span style="{{ nDailyKnob }}"></span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px;padding:17px 20px">
+              <div style="flex:1;min-width:0"><div style="font:600 14px Geist;color:var(--ink)">Silencio nocturno</div><div style="font:400 12.5px Geist;color:var(--ink2);margin-top:2px">Nada entre las 22:00 y las 07:00.</div></div>
+              <div onClick="{{ nNightToggle }}" style="{{ nNightTrack }}"><span style="{{ nNightKnob }}"></span></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <div style="display:flex;align-items:center;gap:12px;margin-top:22px">
+          <span style="flex:1"></span>
+          <button style="display:inline-flex;align-items:center;gap:7px;padding:9px 15px;background:transparent;border:1px solid var(--border);border-radius:9px;font:600 12.5px Geist;color:var(--ink2);cursor:pointer" style-hover="background:var(--row-hover);color:var(--ink)"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 17H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h3M13 14l3-4-3-4M16 10H8"></path></svg>Cerrar sesión</button>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:720}}">
+class Component extends DCLogic {
+  state = { theme: null, sec: 'cuenta', digestOn: true, orderLvl: 'equilibrado', tone: 'directa', focusOn: true, voiceOn: true, nDec: true, nDaily: true, nNight: false };
+  applyTheme(t) {
+    var DARK = {
+      '--paper': '#141110', '--surface': '#1E1A15', '--border': '#37312A', '--border-soft': '#241F1A',
+      '--ink': '#F2F0E9', '--ink2': '#ABA08E', '--muted': '#7C7567',
+      '--moss': '#6E9A73', '--moss-hover': '#7EAA83', '--on-moss': '#11140E',
+      '--chip': '#262019', '--dot': '#463F35', '--avatar': '#262019', '--tint': 'rgba(110,154,115,.16)',
+      '--tint2': 'rgba(110,154,115,.10)', '--aBord': 'rgba(110,154,115,.32)', '--row-hover': '#221D17'
+    };
+    try {
+      var el = document.documentElement;
+      el.setAttribute('data-theme', t);
+      if (t === 'dark') { for (var k in DARK) el.style.setProperty(k, DARK[k]); }
+      else { for (var k2 in DARK) el.style.removeProperty(k2); }
+    } catch (e) {}
+  }
+  componentDidMount() {
+    var t = null;
+    try { t = localStorage.getItem('zelvem-theme'); } catch (e) {}
+    if (t !== 'light' && t !== 'dark') t = this.props.theme || 'light';
+    this.applyTheme(t);
+    this.setState({ theme: t });
+  }
+  componentDidUpdate() { if (this.state.theme) this.applyTheme(this.state.theme); }
+  setTheme(next) {
+    try { localStorage.setItem('zelvem-theme', next); } catch (e) {}
+    this.applyTheme(next);
+    this.setState({ theme: next });
+  }
+  renderVals() {
+    var self = this;
+    var theme = this.state.theme || this.props.theme || 'light';
+    var toggle = function () { self.setTheme(theme === 'dark' ? 'light' : 'dark'); };
+    var st = this.state;
+
+    function tgl(on, handler) {
+      return {
+        track: 'width:40px;height:23px;border-radius:99px;flex:none;cursor:pointer;position:relative;transition:background .16s ease;background:' + (on ? 'var(--moss)' : 'var(--dot)'),
+        knob: 'position:absolute;top:2px;left:2px;width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .16s ease;transform:translateX(' + (on ? '17px' : '0') + ')'
+      };
+    }
+    function seg(opts, sel, key) {
+      return opts.map(function (o, i) {
+        var on = sel === o[0];
+        return { label: o[1], pick: function () { var u = {}; u[key] = o[0]; self.setState(u); },
+          style: 'padding:8px 15px;font:600 12.5px Geist;cursor:pointer;' + (i > 0 ? 'border-left:1px solid var(--border);' : '') + (on ? 'background:var(--moss);color:var(--on-moss);' : 'color:var(--ink2);') };
+      });
+    }
+    var mkTgl = function (key) { return function () { var u = {}; u[key] = !st[key]; self.setState(u); }; };
+
+    var sections = [['cuenta', 'Cuenta'], ['cuentas', 'Cuentas conectadas'], ['zelvem', 'Zelvem'], ['facturacion', 'Facturación'], ['apariencia', 'Apariencia'], ['notificaciones', 'Notificaciones']];
+    var navItems = sections.map(function (s) {
+      var on = st.sec === s[0];
+      return { label: s[1], pick: function () { self.setState({ sec: s[0] }); },
+        style: 'padding:9px 12px;border-radius:9px;font:' + (on ? '600' : '500') + ' 13.5px Geist;cursor:pointer;color:' + (on ? 'var(--ink)' : 'var(--ink2)') + ';' + (on ? 'background:var(--tint);' : '') };
+    });
+
+    var dt = tgl(st.digestOn), ft = tgl(st.focusOn), vt = tgl(st.voiceOn), n1 = tgl(st.nDec), n2 = tgl(st.nDaily), n3 = tgl(st.nNight);
+
+    return {
+      themeKey: 'theme-' + theme, isLight: theme !== 'dark', isDark: theme === 'dark', toggle: toggle,
+      navItems: navItems,
+      isCuenta: st.sec === 'cuenta', isCuentas: st.sec === 'cuentas', isZelvem: st.sec === 'zelvem', isFacturacion: st.sec === 'facturacion', isApariencia: st.sec === 'apariencia', isNotif: st.sec === 'notificaciones',
+      invoices: [
+        { date: '1 de junio, 2026', amount: 'US$ 12,00', status: 'Pagada' },
+        { date: '1 de mayo, 2026', amount: 'US$ 12,00', status: 'Pagada' },
+        { date: '1 de abril, 2026', amount: 'US$ 12,00', status: 'Pagada' },
+        { date: '1 de marzo, 2026', amount: 'US$ 12,00', status: 'Pagada' }
+      ],
+      accounts: [
+        { label: 'Trabajo', detail: 'Gmail · tomas@empresa.com', color: '#3F5D42', status: 'Sincronizado' },
+        { label: 'Personal', detail: 'Gmail · tomas.rivas@gmail.com', color: '#5B6B84', status: 'Sincronizado' },
+        { label: 'Open source', detail: 'GitHub · @trivas', color: '#9C6B4F', status: 'Sincronizado' },
+        { label: 'Calendario', detail: 'Google Calendar · 2 calendarios', color: '#8A8579', status: 'Conectado' }
+      ],
+      digestToggle: mkTgl('digestOn'), digestTrack: dt.track, digestKnob: dt.knob,
+      focusToggle: mkTgl('focusOn'), focusTrack: ft.track, focusKnob: ft.knob,
+      voiceToggle: mkTgl('voiceOn'), voiceTrack: vt.track, voiceKnob: vt.knob,
+      nDecToggle: mkTgl('nDec'), nDecTrack: n1.track, nDecKnob: n1.knob,
+      nDailyToggle: mkTgl('nDaily'), nDailyTrack: n2.track, nDailyKnob: n2.knob,
+      nNightToggle: mkTgl('nNight'), nNightTrack: n3.track, nNightKnob: n3.knob,
+      orderSeg: seg([['suave', 'Suave'], ['equilibrado', 'Equilibrado'], ['agresivo', 'Agresivo']], st.orderLvl, 'orderLvl'),
+      toneSeg: seg([['directa', 'Directa'], ['formal', 'Formal'], ['calida', 'Cálida']], st.tone, 'tone'),
+      themeSeg: [['light', 'Claro'], ['dark', 'Oscuro']].map(function (o, i) {
+        var on = (theme === 'dark' ? 'dark' : 'light') === o[0];
+        return { label: o[1], pick: function () { self.setTheme(o[0]); },
+          style: 'padding:8px 15px;font:600 12.5px Geist;cursor:pointer;' + (i > 0 ? 'border-left:1px solid var(--border);' : '') + (on ? 'background:var(--moss);color:var(--on-moss);' : 'color:var(--ink2);') };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>
