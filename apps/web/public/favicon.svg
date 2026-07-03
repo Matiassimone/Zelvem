@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Zelvem">
+  <style>
+    .mk { fill: #3F5D42; }
+    @media (prefers-color-scheme: dark) { .mk { fill: #6E9A73; } }
+  </style>
+  <defs>
+    <mask id="z"><rect x="8" y="8" width="84" height="84" rx="20" fill="#fff"/><rect x="35" y="35" width="30" height="30" rx="9" fill="#000"/></mask>
+  </defs>
+  <rect class="mk" x="8" y="8" width="84" height="84" rx="20" mask="url(#z)"/>
+</svg>

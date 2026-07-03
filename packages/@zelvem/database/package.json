@@ -1,0 +1,23 @@
+{
+  "name": "@zelvem/database",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "prisma generate && tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@prisma/client": "6.19.3",
+    "@zelvem/core": "workspace:*",
+    "neverthrow": "8.2.0",
+    "prisma": "6.19.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.0",
+    "config-tsconfig": "workspace:*",
+    "typescript": "5.9.3",
+    "vitest": "3.2.6"
+  }
+}

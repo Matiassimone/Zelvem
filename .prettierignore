@@ -1,0 +1,13 @@
+# Prettier already respects .gitignore (node_modules, dist, .next, etc.)
+
+# Design reference material — prototypes and assets, not app code
+docs/
+
+# Curated docs (CLAUDE.md, AGENTS.md, reports) — hand-formatted, do not reflow
+*.md
+
+# Lockfile is machine-managed
+pnpm-lock.yaml
+
+# Supply-chain security control (AGENTS.md) — hand-managed, keep churn-free
+pnpm-workspace.yaml

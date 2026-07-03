@@ -1,0 +1,29 @@
+# Naming convention (settled — do not revisit):
+# - apps/* use plain names (web, api, workers, mobile, desktop); they are
+#   deployment targets, never publishable packages, so no @zelvem scope.
+# - packages/* under @zelvem/ use the @zelvem/* scope; shared config packages
+#   (config-eslint, config-tsconfig, config-tailwind) stay unscoped.
+packages:
+  - 'apps/*'
+  - 'packages/*'
+  - 'packages/@zelvem/*'
+# Supply-chain security controls (AGENTS.md — Dependency Management).
+# pnpm 11 reads these from this file, not from .npmrc / package.json.
+
+# pnpm add always pins exact versions — no ^ or ~ ranges.
+saveExact: true
+
+# Dependency build-script allowlist. Everything else is blocked by default.
+# - prisma/@prisma/*: downloads the query engines at install time
+# - esbuild: fetches its platform binary (vitest dependency)
+# - msgpackr-extract: native accelerator for bullmq — false, pure-JS fallback works
+allowBuilds:
+  '@prisma/client': true
+  '@prisma/engines': true
+  # argon2: password hashing — native N-API module (prebuilt binaries, builds from source only as fallback)
+  argon2: true
+  esbuild: true
+  msgpackr-extract: false
+  prisma: true
+  # sharp: Next.js image optimizer — needs its native binary
+  sharp: true

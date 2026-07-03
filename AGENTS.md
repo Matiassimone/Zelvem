@@ -4,6 +4,40 @@ Always-on rules for Claude Code. Read CLAUDE.md for full architectural context.
 
 ---
 
+## Dependency Management
+
+**No carets or tildes in `dependencies` or `devDependencies`.** Ever. All non-peer dependencies must use exact versions.
+
+```json
+// correct
+"dependencies": { "neverthrow": "8.1.1" }
+"devDependencies": { "vitest": "3.2.4" }
+
+// never
+"dependencies": { "neverthrow": "^8.1.1" }
+```
+
+**Exception — `peerDependencies` use ranges intentionally.** A peer range expresses compatibility, not pinning. Forcing an exact version in a peer would break consumers on any patch release.
+
+```json
+// correct in peerDependencies
+"peerDependencies": { "@nestjs/common": "^11.0.0" }
+```
+
+**pnpm 11 reads security config from `pnpm-workspace.yaml`, not `package.json`.** The effective controls are:
+- `saveExact: true` in `pnpm-workspace.yaml` — enforces exact versions on `pnpm add`
+- `allowBuilds` in `pnpm-workspace.yaml` — allowlist for lifecycle scripts (replaces `onlyBuiltDependencies` in package.json, which pnpm 11 ignores)
+
+`.npmrc` stays intact for the other security settings (`ignore-scripts=true`, `registry`, etc.). Never modify either file without flagging it in the session report.
+
+**Adding a new dependency checklist:**
+1. Check if an existing `@zelvem/*` package or already-installed dependency covers the need (Ponytail rung 2 and 5)
+2. Use exact version: `pnpm add package@x.y.z`
+3. Verify no `^` or `~` was introduced in `dependencies` or `devDependencies`
+4. If the package needs lifecycle scripts, add it to `allowBuilds` in `pnpm-workspace.yaml` and document why in the session report
+
+---
+
 ## File and Component Naming
 
 **NestJS files:** `[name].[type].ts` — always suffix with the role.
@@ -91,13 +125,17 @@ Keep `.env.example` updated every time a new env var is introduced. It is the ca
 
 ```ts
 // Example: new var added to code
-OLLAMA_BASE_URL=http://localhost:11434  # Base URL for the local Ollama instance
+TEI_BASE_URL=http://tei:8080  # Base URL for the local HuggingFace TEI instance (bge-m3)
 ```
 
 **Error handling: Result pattern**
 Use `neverthrow` for non-critical errors. Services and repositories return `Result<T, AppError>` instead of throwing. Only unexpected/unrecoverable errors bubble up as NestJS exceptions.
 
+`AppError` lives in `@zelvem/core` — import it from there across all packages and apps.
+
 ```ts
+import { AppError } from '@zelvem/core'
+
 // repository
 return ok(user)
 return err(new AppError('USER_NOT_FOUND'))
@@ -112,8 +150,19 @@ NestJS exception filters handle the truly exceptional layer. Business logic erro
 **Validation pipes**
 `ValidationPipe` registered globally in `main.ts` with `whitelist: true` and `forbidNonWhitelisted: true`. DTOs in `@zelvem/contracts` are the single source of validation.
 
-**Config management**
-`@nestjs/config` for all configuration. No `process.env` calls outside of the config module.
+**Linting and formatting**
+- `pnpm lint` — ESLint flat config (eslint recommended + typescript-eslint recommended + react-hooks scoped to web and @zelvem/ui). Run from root, covers the whole monorepo.
+- `pnpm format` — Prettier, writes in place.
+- `pnpm format:check` — Prettier check, CI-ready, fails on drift.
+
+Three gates must pass before marking any task complete (in order):
+```
+pnpm format:check   # style
+pnpm lint           # errors
+pnpm build          # types + compilation
+```
+
+`docs/` is excluded from both lint and format — design reference prototypes, not application code.
 
 **Logging: nestjs-pino**
 Use `nestjs-pino` with `pino-pretty` in development. JSON structured output in production. Register as a global logger in `app.module.ts`. No `console.log` in application code.
@@ -125,7 +174,7 @@ Use `nestjs-pino` with `pino-pretty` in development. JSON structured output in p
 These are hard stops. No exceptions regardless of task scope.
 
 - **No module calls AI APIs directly.** All AI goes through `@zelvem/ai/generation/functions/` or `@zelvem/ai/embeddings/client.ts`.
-- **User content never leaves the server.** No emails, notes, audio, or transcripts sent to external APIs. Embeddings run locally via Ollama.
+- **User content never leaves the server.** No emails, notes, audio, or transcripts sent to external APIs. Embeddings run locally via HuggingFace TEI.
 - **`repository.ts` is the only Prisma layer.** `service.ts` files never import `PrismaClient` directly.
 - **Workers never expose HTTP.** The API enqueues jobs; workers only process them.
 - **No auto-send on email, no auto-publish on blog.** These actions always require explicit human confirmation.
@@ -134,7 +183,8 @@ These are hard stops. No exceptions regardless of task scope.
 
 ## Stack Rules
 
-- **UI:** always `shadcn/ui` components. Never native HTML inputs (`<input type="date">`, `<select>`, etc.) when a styled component exists in `@zelvem/ui`.
+- **UI (web/desktop):** always `shadcn/ui` components. Never native HTML inputs (`<input type="date">`, `<select>`, etc.) when a styled component exists in `@zelvem/ui`.
+- **UI (landing):** artisanal components, light theme only, no shadcn and no dark mode. Zero-JS and SEO take priority. Shares design tokens and the "Tinta + Musgo" palette, not components.
 - **Backend:** NestJS modules, providers, controllers, DTOs, and repositories are required structure, not over-engineering. Do not simplify them away.
 - **Packages:** check existing `@zelvem/*` packages before creating anything new. Reuse first.
 - **New package:** only justified if the abstraction is needed by 2+ apps and has no existing home.
@@ -149,6 +199,11 @@ These are hard stops. No exceptions regardless of task scope.
 - Comments follow **TSDoc**. Only comment the *why*, never the *what*.
 - CSS custom properties use English names: `--ink`, `--paper`, `--moss`, `--accent-border`, etc.
 - All user-facing strings go through the **i18n layer**. No hardcoded strings in components.
+- **Import order**: (1) external packages, (2) `@zelvem/*`, (3) relative imports — blank line between groups.
+- **Named exports only** — no default exports except React page/screen components and Next.js special files (`layout.tsx`, `page.tsx`, `loading.tsx`, `error.tsx`).
+- **No `any`** — use `unknown` and narrow it. Any `eslint-disable` on an `any` requires an explicit comment explaining why.
+- **No TypeScript `enum` keyword** — use `as const` + union type. Interops cleanly with Zod and Prisma.
+- **NestJS module boundaries** — never import a service or repository from another module directly. Cross-module access goes through `exports` in `module.ts`.
 
 ---
 
@@ -205,7 +260,8 @@ The plugin does not cover Zelvem's architectural security rules. These are enfor
 - **Credentials never touch application code.** OAuth tokens (Gmail, LinkedIn, X), API keys, and secrets live in environment variables only. Never log them, never include them in BullMQ job payloads, never pass them through the request context.
 - **BullMQ jobs carry IDs, not content.** A job payload may contain `{ userId, emailId }` but never the email body, audio buffer, or any user content. The worker fetches the content itself from the DB.
 - **Every API route goes through NestJS guards.** No ad-hoc `if (!user) throw` checks in controllers. Auth and authorization live in `common/guards/`.
-- **Ollama endpoint is internal only.** Never expose the Ollama HTTP port externally. It is a service-to-service call from the workers container only.
+- **TEI endpoint is internal only.** Never expose the HuggingFace TEI port externally. It is reachable from the api container (query-time embeddings) and the workers container (batch ingestion) at `http://tei:8080/embed` — nothing else.
+- **faster-whisper endpoint is internal only.** Same pattern as TEI: never exposed externally, reachable from the workers container only (transcription is always an async job, never in the request path).
 - **pgbouncer in transaction mode.** Never use session-mode features (prepared statements, advisory locks, `SET` commands) - they break under pgbouncer transaction mode.
 - **No user content in LLM prompts.** Prompts receive summaries or metadata. Raw email bodies, notes, or audio transcripts never go into a generation prompt.
 
@@ -230,6 +286,18 @@ Produce a structured report in this exact format:
 ---
 ## Session Report
 
+### Skills activated this session
+| Skill / Plugin | Moment | Result |
+|---|---|---|
+| Ponytail full | pre-hook every turn | active |
+| security-guidance | pre-tool hook on Write/Edit | active |
+| /brainstorming | before starting task | [ used / skipped — reason ] |
+| /execute-plan | implementation | [ used / skipped — reason ] |
+| TDD | non-trivial code | [ used / skipped — reason ] |
+| /ponytail-review | before marking complete | [ used / skipped — reason ] |
+| /ponytail-debt | end of session | [ used / skipped — reason ] |
+| /ponytail-audit | new module start | [ used / skipped — reason ] |
+
 ### What happened
 - [ short bullet list of what was completed, one line each ]
 
@@ -252,8 +320,6 @@ Flag any file that needs updating as a result of this session:
 [ single sentence describing the logical next step ]
 ---
 
----
-
 ## Build Order (reference)
 
 Base infrastructure before any module. Do not start a module until the base is solid.
@@ -265,5 +331,6 @@ Base infrastructure before any module. Do not start a module until the base is s
 5. `apps/api` shell (NestJS app module, guards, interceptors, queue setup)
 6. `@zelvem/ui` (shadcn/ui setup, design tokens wired)
 7. `apps/web` shell (Next.js App Router, auth flow, dashboard layout, rail)
-8. `docker/docker-compose.yml` (Postgres + Redis + Ollama + api + workers)
+8. `docker/docker-compose.yml` (Postgres + Redis + TEI + faster-whisper + api + workers)
 9. Modules: one at a time, decided at session start.
+10. `apps/landing` (Astro, zelvem.com) — independent of module progress, can be built any time after step 1. Light theme only, artisanal components, shares design tokens.

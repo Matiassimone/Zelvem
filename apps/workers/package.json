@@ -1,0 +1,20 @@
+{
+  "name": "workers",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/main.js"
+  },
+  "dependencies": {
+    "@zelvem/core": "workspace:*",
+    "bullmq": "5.79.2",
+    "pino": "10.1.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.0",
+    "config-tsconfig": "workspace:*",
+    "typescript": "5.9.3"
+  }
+}
