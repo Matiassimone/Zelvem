@@ -1,0 +1,106 @@
+# Zelvem Community stack: Postgres (pgvector) + Redis + TEI (bge-m3) + api + workers.
+#
+# Run from the repo root:
+#   JWT_SECRET=<32+ chars> docker compose -f docker/docker-compose.yml up -d
+# (or put JWT_SECRET in docker/.env — see .env.example at the repo root)
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: zelvem
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-zelvem}
+      POSTGRES_DB: zelvem
+    ports:
+      - '5432:5432' # exposed for local development and prisma migrate dev
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U zelvem -d zelvem']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:8-alpine
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # Embeddings inference (bge-m3). Internal only — no ports mapped, ever
+  # (AGENTS.md Security). Reached as http://tei:8080 from api/workers.
+  tei:
+    image: ghcr.io/huggingface/text-embeddings-inference:cpu-1.8
+    # TEI publishes amd64-only CPU images; on Apple Silicon this runs under
+    # Rosetta emulation (fine for dev). Production Hosted runs on amd64 natively.
+    platform: linux/amd64
+    # ponytail: max-batch-tokens 1024 keeps warmup under the dev VM memory
+    # ceiling (bge-m3 OOMs at the 16384 default under emulation) — raise for
+    # native amd64 production when embedding throughput starts to matter.
+    # --port 8080: TEI defaults to 80; CLAUDE.md fixes the internal contract at tei:8080.
+    command: --model-id BAAI/bge-m3 --max-batch-tokens 1024 --auto-truncate --port 8080
+    volumes:
+      - teidata:/data
+    healthcheck:
+      test: ['CMD', 'curl', '-fs', 'http://127.0.0.1:8080/health']
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      # First boot downloads bge-m3 (~2.3GB) before serving — give it room.
+      start_period: 900s
+
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    # Workdir at the app so `docker compose exec api node dist/cli/create-user.js`
+    # works as documented; runMigrations() resolves prisma cwd-independently.
+    working_dir: /repo/apps/api
+    command: ['node', 'dist/main.js']
+    environment:
+      NODE_ENV: production
+      ZELVEM_HOSTED: 'false'
+      DATABASE_URL: postgresql://zelvem:${POSTGRES_PASSWORD:-zelvem}@postgres:5432/zelvem
+      REDIS_URL: redis://redis:6379
+      TEI_BASE_URL: http://tei:8080
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required - see .env.example}
+    ports:
+      - '3001:3001'
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -qO- http://127.0.0.1:3001/health || exit 1']
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 30s
+
+  workers:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: ['node', 'apps/workers/dist/main.js']
+    environment:
+      NODE_ENV: production
+      REDIS_URL: redis://redis:6379
+      TEI_BASE_URL: http://tei:8080
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD-SHELL', "pgrep -f 'apps/workers' > /dev/null"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  pgdata:
+  redisdata:
+  teidata:

@@ -1,0 +1,50 @@
+# --- Dependencies ---
+node_modules/
+
+# --- Build output ---
+dist/
+.next/
+.astro/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# --- Turborepo cache ---
+.turbo/
+
+# --- Environment files (never commit secrets; .env.example is the canonical reference) ---
+.env
+.env.*
+!.env.example
+
+# --- Test coverage ---
+coverage/
+
+# --- Logs ---
+*.log
+
+# --- Mobile (Expo) ---
+.expo/
+
+# --- Desktop (Tauri — Rust build artifacts) ---
+apps/desktop/src-tauri/target/
+
+# --- Claude Code (personal overrides only; project settings are committed) ---
+.claude/settings.local.json
+
+# --- Editors / IDEs ---
+.idea/
+.vscode/
+
+# --- Design sync (claude.ai/design) — staged scripts, build output, machine state ---
+.ds-sync/
+ds-bundle/
+.design-sync/.cache/
+.design-sync/learnings/
+.design-sync/node_modules
+.ds-preview-entry.css
+packages/@zelvem/ui/.ds-preview.css
+
+# --- OS noise ---
+.DS_Store
+Thumbs.db

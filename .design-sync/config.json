@@ -1,0 +1,15 @@
+{
+  "projectId": "35c20448-e09b-4b09-b53e-18320691d058",
+  "shape": "package",
+  "pkg": "@zelvem/ui",
+  "globalName": "ZelvemUI",
+  "tsconfig": "tsconfig.json",
+  "buildCmd": "node .design-sync/build-css.mjs",
+  "readmeHeader": ".design-sync/conventions.md",
+  "cssEntry": ".ds-preview.css",
+  "componentSrcMap": {
+    "ZelvemButton": "src/components/ZelvemButton.tsx",
+    "ZelvemInput": "src/components/ZelvemInput.tsx",
+    "ZelvemLogo": "src/components/ZelvemLogo.tsx"
+  }
+}

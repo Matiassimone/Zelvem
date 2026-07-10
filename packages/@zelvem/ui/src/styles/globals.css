@@ -1,0 +1,129 @@
+/*
+ * Zelvem design tokens — source of truth: docs/design/DESIGN.md ("Tinta + Musgo").
+ * Light is the default; dark applies via :root[data-theme='dark'], persisted
+ * in localStorage under 'zelvem-theme'.
+ */
+:root {
+  --paper: #f2f0e9;
+  --surface: #fbfaf6;
+  --border: #dad7cb;
+  --border-soft: #e4e1d6;
+  --ink: #14171a;
+  --ink2: #5c584e;
+  --muted: #8a8579;
+  --moss: #3f5d42;
+  --moss-hover: #344c37;
+  --on-moss: #f2f0e9;
+  --chip: #efece3;
+  --dot: #c9c5b7;
+  --avatar: #e7e3d7;
+  --tint: rgba(63, 93, 66, 0.12);
+  --tint2: rgba(63, 93, 66, 0.07);
+  --accent-border: rgba(63, 93, 66, 0.25);
+
+  /* Email module */
+  --row-hover: #f1eee6;
+  --cluster-head: #f4f2eb;
+  --filter-on: #eae7dd;
+
+  /* Calendar module */
+  --surf2: #eae7dd;
+  --grid: #e8e5da;
+  --faint: #a8a293;
+  --event-work-border: #d7d3c7;
+  --event-work-bg: #fbfaf6;
+  --personal: #eeebe2;
+  --personal-border: #dcd8cc;
+  --free-border: #bbb6a8;
+  --cat-meet: #5c584e;
+  --cat-personal: #c9c5b7;
+}
+
+:root[data-theme='dark'] {
+  --paper: #141110;
+  --surface: #1e1a15;
+  --border: #37312a;
+  --border-soft: #241f1a;
+  --ink: #f2f0e9;
+  --ink2: #aba08e;
+  --muted: #7c7567;
+  --moss: #6e9a73;
+  --moss-hover: #7eaa83;
+  --on-moss: #11140e;
+  --chip: #262019;
+  --dot: #463f35;
+  --avatar: #262019;
+  --tint: rgba(110, 154, 115, 0.16);
+  --tint2: rgba(110, 154, 115, 0.1);
+  --accent-border: rgba(110, 154, 115, 0.32);
+
+  /* Email module */
+  --row-hover: #221d17;
+  --cluster-head: #1b1712;
+  --filter-on: #2a241d;
+
+  /* Calendar module */
+  --surf2: #2a241d;
+  --grid: #241f1a;
+  --faint: #5f594c;
+  --event-work-border: #3a342c;
+  --event-work-bg: #25211b;
+  --personal: #262019;
+  --personal-border: #37312a;
+  --free-border: #4a4438;
+  --cat-meet: #8e897a;
+  --cat-personal: #463f35;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+  --color-ink: var(--ink);
+  --color-ink2: var(--ink2);
+  --color-muted: var(--muted);
+  --color-moss: var(--moss);
+  --color-moss-hover: var(--moss-hover);
+  --color-on-moss: var(--on-moss);
+  --color-chip: var(--chip);
+  --color-dot: var(--dot);
+  --color-avatar: var(--avatar);
+  --color-tint: var(--tint);
+  --color-tint2: var(--tint2);
+  --color-accent-border: var(--accent-border);
+  --color-row-hover: var(--row-hover);
+
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* "Thinking" rotation — only while Zelvem is processing, never at rest. */
+  --animate-zrotate: zrotate 5.6s cubic-bezier(0.7, 0, 0.2, 1) infinite;
+  @keyframes zrotate {
+    0%,
+    16% {
+      transform: rotate(0);
+    }
+    25%,
+    41% {
+      transform: rotate(90deg);
+    }
+    50%,
+    66% {
+      transform: rotate(180deg);
+    }
+    75%,
+    91% {
+      transform: rotate(270deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}

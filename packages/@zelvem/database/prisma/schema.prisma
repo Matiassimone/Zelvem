@@ -1,0 +1,142 @@
+// Skeleton schema: essential fields only. Each model grows organically
+// when its module is built. One logical database per user (Hosted), so
+// no tenant_id / userId columns — user identity is the database itself.
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+// ---------- Auth ----------
+
+// Community auth: email + password (argon2) only — see CLAUDE.md Authentication.
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+// ---------- Email ----------
+
+model EmailAccount {
+  id        String   @id @default(cuid())
+  provider  String
+  address   String   @unique
+  createdAt DateTime @default(now())
+  emails    Email[]
+}
+
+model Email {
+  id         String       @id @default(cuid())
+  accountId  String
+  account    EmailAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  subject    String
+  from       String
+  receivedAt DateTime
+  category   String?
+  createdAt  DateTime     @default(now())
+}
+
+// ---------- Blog ----------
+
+enum BlogDraftStatus {
+  draft
+  in_review
+  published
+}
+
+enum BlogSourceType {
+  text
+  audio
+}
+
+model BlogDraft {
+  id         String          @id @default(cuid())
+  title      String?
+  content    String
+  status     BlogDraftStatus @default(draft)
+  sourceType BlogSourceType  @default(text)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+}
+
+// ---------- Todos / Projects ----------
+
+model Project {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  todos     Todo[]
+}
+
+enum TodoStatus {
+  open
+  done
+}
+
+enum TodoSource {
+  manual
+  audio
+  email
+  idea
+}
+
+model Todo {
+  id        String     @id @default(cuid())
+  title     String
+  status    TodoStatus @default(open)
+  source    TodoSource @default(manual)
+  projectId String?
+  project   Project?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  createdAt DateTime   @default(now())
+}
+
+// ---------- Social ----------
+
+enum SocialPlatform {
+  LINKEDIN
+  X
+}
+
+enum SocialPostStatus {
+  draft
+  published
+}
+
+model SocialPost {
+  id          String           @id @default(cuid())
+  platform    SocialPlatform
+  content     String
+  status      SocialPostStatus @default(draft)
+  scheduledAt DateTime?
+  createdAt   DateTime         @default(now())
+}
+
+// ---------- Calendar ----------
+
+model CalendarEvent {
+  id        String   @id @default(cuid())
+  title     String
+  startsAt  DateTime
+  endsAt    DateTime
+  createdAt DateTime @default(now())
+}
+
+// ---------- Finance ----------
+
+model Expense {
+  id         String   @id @default(cuid())
+  amount     Decimal  @db.Decimal(12, 2)
+  currency   String   @default("USD")
+  category   String
+  incurredAt DateTime
+  note       String?
+  createdAt  DateTime @default(now())
+}

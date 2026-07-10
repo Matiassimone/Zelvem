@@ -1,0 +1,33 @@
+{
+  "name": "web",
+  "version": "0.0.0",
+  "private": true,
+  "license": "BUSL-1.1",
+  "author": "Matias Simone <matias@zelvem.com>",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@zelvem/assets": "workspace:*",
+    "@zelvem/contracts": "workspace:*",
+    "@zelvem/ui": "workspace:*",
+    "lucide-react": "1.23.0",
+    "next": "16.2.10",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.2",
+    "@types/node": "22.20.0",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "config-tsconfig": "workspace:*",
+    "tailwindcss": "4.3.2",
+    "typescript": "5.9.3",
+    "vitest": "3.2.6"
+  }
+}

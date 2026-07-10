@@ -1,0 +1,16 @@
+{
+  "name": "@zelvem/core",
+  "version": "0.0.0",
+  "private": true,
+  "license": "BUSL-1.1",
+  "author": "Matias Simone <matias@zelvem.com>",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "config-tsconfig": "workspace:*",
+    "typescript": "5.9.3"
+  }
+}

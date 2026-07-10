@@ -1,0 +1,28 @@
+{
+  "name": "@zelvem/auth",
+  "version": "0.0.0",
+  "private": true,
+  "license": "BUSL-1.1",
+  "author": "Matias Simone <matias@zelvem.com>",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@zelvem/core": "workspace:*",
+    "jsonwebtoken": "9.0.3",
+    "neverthrow": "8.2.0"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^11.0.0"
+  },
+  "devDependencies": {
+    "@nestjs/common": "11.1.27",
+    "@types/jsonwebtoken": "9.0.10",
+    "config-tsconfig": "workspace:*",
+    "typescript": "5.9.3",
+    "vitest": "3.2.6"
+  }
+}
