@@ -189,6 +189,7 @@ These are hard stops. No exceptions regardless of task scope.
 - **Packages:** check existing `@zelvem/*` packages before creating anything new. Reuse first.
 - **New package:** only justified if the abstraction is needed by 2+ apps and has no existing home.
 - **Microservice:** only justified if task load demands it (e.g. audio transcription at scale). Never for business design reasons.
+- **Assets:** if a file is consumed by an `import` or `<img src>`, it lives in `packages/@zelvem/assets/`. If it is visual reference for humans, it lives in `docs/design/`. Application code never imports from `docs/`. App `public/` folders hold derived copies for direct-URL serving (favicons, manifest) — `@zelvem/assets` is always the canonical source.
 - **Database:** `repository.ts` handles all Prisma calls. `service.ts` handles business logic only.
 
 ---

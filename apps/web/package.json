@@ -2,6 +2,8 @@
   "name": "web",
   "version": "0.0.0",
   "private": true,
+  "license": "BUSL-1.1",
+  "author": "Matias Simone <matias@zelvem.com>",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,6 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@zelvem/assets": "workspace:*",
     "@zelvem/contracts": "workspace:*",
     "@zelvem/ui": "workspace:*",
     "lucide-react": "1.23.0",

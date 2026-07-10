@@ -57,7 +57,10 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    command: ['node', 'apps/api/dist/main.js']
+    # Workdir at the app so `docker compose exec api node dist/cli/create-user.js`
+    # works as documented; runMigrations() resolves prisma cwd-independently.
+    working_dir: /repo/apps/api
+    command: ['node', 'dist/main.js']
     environment:
       NODE_ENV: production
       ZELVEM_HOSTED: 'false'

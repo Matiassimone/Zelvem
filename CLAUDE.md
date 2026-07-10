@@ -307,6 +307,8 @@ zelvem/
 │   │       └── client.ts             # HTTP to HuggingFace TEI, bge-m3
 │   │
 │   ├── @zelvem/auth/                 # JWT / sessions
+│   ├── @zelvem/assets/               # consumable brand assets (logos, favicons, SVGs)
+│   │                                 # any file consumed by an import or <img src> lives here
 │   ├── @zelvem/core/                 # pure shared logic (no UI, no DB)
 │   ├── @zelvem/billing/              # Stripe - inactive if STRIPE_SECRET_KEY is absent
 │   │   └── src/
@@ -394,10 +396,13 @@ docs/design/
 │   └── DESIGN.md
 ├── landing/      # landing (zelvem.com) — Astro
 │   └── DESIGN.md
-├── app/          # mobile app — Expo (Hosted only)
-│   └── DESIGN.md
-└── common/       # shared assets across surfaces (logo, favicons, SVGs)
+└── app/          # mobile app — Expo (Hosted only)
+    └── DESIGN.md
 ```
+
+**Asset placement rule:** if a file is consumed by an `import` or an `<img src>`, it lives in `packages/@zelvem/assets/`. If it is visual reference material for humans (prototypes, screenshots, brand sheets), it lives in `docs/design/`. Nothing in `docs/` is ever imported by application code — no bundler scans it and no `@zelvem/*` alias resolves it. Turborepo tracks `@zelvem/assets` as an internal dependency: if a logo changes, consuming apps rebuild automatically.
+
+**`public/` folders are derived copies, not sources.** Files that must be served by direct URL (favicons, manifest, robots.txt, og-image) are copied from `@zelvem/assets` into each app's `public/`. The package is always the canonical source — if an asset changes, update it in `@zelvem/assets` first, then re-copy to the `public/` folders that serve it. Components never inline-duplicate SVGs; they import from the package.
 
 Before touching any frontend component, read the DESIGN.md for the relevant surface.
 

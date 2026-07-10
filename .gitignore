@@ -36,6 +36,15 @@ apps/desktop/src-tauri/target/
 .idea/
 .vscode/
 
+# --- Design sync (claude.ai/design) — staged scripts, build output, machine state ---
+.ds-sync/
+ds-bundle/
+.design-sync/.cache/
+.design-sync/learnings/
+.design-sync/node_modules
+.ds-preview-entry.css
+packages/@zelvem/ui/.ds-preview.css
+
 # --- OS noise ---
 .DS_Store
 Thumbs.db

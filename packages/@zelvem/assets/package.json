@@ -1,10 +1,11 @@
 {
-  "name": "config-tailwind",
+  "name": "@zelvem/assets",
   "version": "0.0.0",
   "private": true,
   "license": "BUSL-1.1",
   "author": "Matias Simone <matias@zelvem.com>",
-  "devDependencies": {
-    "config-tsconfig": "workspace:*"
+  "exports": {
+    "./logos/*": "./logos/*",
+    "./ilustrations/*": "./ilustrations/*"
   }
 }
